@@ -1,4 +1,4 @@
-# Artifical Intelligence: SUMMER 2021
+# Artifical Intelligence: Summer 2021
 - Professor: Chih-Cheng Hung 
 - Email: chung1@kennesaw.edu 
 - Office Location: J-384 
