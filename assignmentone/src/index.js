@@ -18,6 +18,11 @@ function App() {
     [3, 0, 4],
     [5, 2, 1],
   ];
+  const [top, settop] = useState(false);
+  const [right, setright] = useState(false);
+  const [left, setleft] = useState(false);
+  const [bottom, setbottom] = useState(false);
+  const [nearzero, setnearzero] = useState(false);
 
   const [boardstate, setboardstate] = useState(board);
 
@@ -25,8 +30,79 @@ function App() {
     var zeroindex = 0;
     var zerosindex = 0;
     var value = boardstate[index][sindex];
+    console.log("Index: " + index + "\nSub Index: " + sindex);
 
-    for (let i = 0; i < boardstate.length; i++) {
+    if (index === 0) {
+      setleft(true);
+      console.log("I am left");
+      if (boardstate[index + 1][sindex] === 0) {
+        console.log("I am left to a zero");
+        setnearzero(true);
+      }
+      if (sindex === 0) {
+        settop(true);
+        if (boardstate[index][sindex + 1] === 0) {
+          console.log("I have a zero below me");
+          setnearzero(true);
+        }
+        console.log("I am top");
+      } else if (sindex === 2) {
+        bottom = true;
+        console.log("I am bottom");
+        if (boardstate[index][sindex - 1] === 0) {
+          console.log("I have a zero above me");
+          setnearzero(true);
+        }
+      } else {
+        console.log("I am vertially middle");
+      }
+    } else if (index === 2) {
+      setright(true);
+      console.log("I am right");
+      if (boardstate[index - 1][sindex] === 0) {
+        console.log("I am right to a zero");
+        setnearzero(true);
+      }
+      if (sindex === 0) {
+        settop(true);
+        console.log("I am top");
+        if (boardstate[index][sindex + 1] === 0) {
+          console.log("I have a zero below me");
+          setnearzero(true);
+        }
+      } else if (sindex === 2) {
+        setbottom(true);
+        console.log("I am bottom");
+        if (boardstate[index][sindex - 1] === 0) {
+          console.log("I have a zero above me");
+          setnearzero(true);
+        }
+      } else {
+        console.log("I am vertially middle");
+      }
+    } else {
+      console.log("I am horizontally middle");
+      if (sindex === 0) {
+        settop(true);
+        console.log("I am top");
+        if (boardstate[index][sindex + 1] === 0) {
+          console.log("I have a zero below me");
+          setnearzero(true);
+        }
+      } else if (sindex === 2) {
+        setbottom(true);
+        console.log("I am bottom");
+        if (boardstate[index][sindex - 1] === 0) {
+          console.log("I have a zero above me");
+          setnearzero(true);
+        }
+      } else {
+        console.log("I am vertially middle");
+      }
+    }
+
+    {
+      /* for (let i = 0; i < boardstate.length; i++) {
       for (let t = 0; t < boardstate.length; t++) {
         if (boardstate[i][t] === 0) {
           zeroindex = i;
@@ -40,29 +116,6 @@ function App() {
     console.log("Board Index 1: " + boardstate[1]);
     console.log("Board Index 2: " + boardstate[2]);
     console.log("Zero Index was : " + zeroindex + " " + zerosindex);
-    if (sindex < boardstate[index].length - 1) {
-      console.log("inside top");
-      if (boardstate[index][sindex + 1] === boardstate[zeroindex][zerosindex]) {
-        console.log("hello top");
-        if (sindex === 0) {
-          console.log("hello tippy top");
-        }
-        if (sindex === 1) {
-          console.log("hello middle top");
-        }
-      }
-    }
-    if (sindex > 0) {
-      console.log("inside bottom");
-      if (boardstate[index][sindex - 1] === boardstate[zeroindex][zerosindex]) {
-        if (sindex === 2) {
-          console.log("hello rock bottom");
-        }
-        if (sindex === 1) {
-          console.log("hello middle bottom");
-        }
-      }
-    }
     if (index < board.length - 1) {
       if (boardstate[index + 1][sindex] === boardstate[zeroindex][zerosindex]) {
         console.log("swap right zero");
@@ -114,6 +167,32 @@ function App() {
           setboardstate([temp0, temp1, temp2]);
         }
       }
+    }
+    if (sindex > 0) {
+      console.log("inside bottom");
+      if (boardstate[index][sindex - 1] === boardstate[zeroindex][zerosindex]) {
+        if (sindex === 2) {
+          console.log("hello rock bottom");
+        }
+        if (sindex === 1) {
+          console.log("hello middle bottom");
+        }
+      }
+    }
+    if (sindex < boardstate[index].length - 1) {
+      console.log("inside top");
+      if (boardstate[index][sindex + 1] === boardstate[zeroindex][zerosindex]) {
+        if (sindex === 0) {
+          var zero = 0;
+          var temp = boardstate.splice(1, 1, [0, 3, 4]);
+          console.log(temp);
+          console.log("hello tippy top");
+        }
+        if (sindex === 1) {
+          console.log("hello middle top");
+        }
+      }
+    } */
     }
   }
 
