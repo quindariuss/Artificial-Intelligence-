@@ -15,8 +15,8 @@ import {
 function App() {
   const board = [
     [8, 7, 6],
-    [3, 0, 5],
-    [4, 2, 1],
+    [3, 4, 5],
+    [0, 2, 1],
   ];
 
   const [boardstate, setboardstate] = useState(board);
@@ -50,22 +50,21 @@ function App() {
         console.log(value);
         if (index === 1) {
           var temprowzero = boardstate[index].splice(sindex, 1, 0);
-          var temp0 = boardstate.splice(sindex, 1, [temprowzero]).flat();
-          console.log("Temp 0:" + temp0);
           var temprow = boardstate[zeroindex].splice(zerosindex, 1, value);
-          var temp1 = [...boardstate[1]];
+
+          var temp1 = boardstate.splice(index, 1, [temprowzero]).flat();
+          var temp0 = [...boardstate[0]];
           var temp2 = boardstate.splice(zeroindex, 1, [temprow]).flat();
           setboardstate([temp0, temp1, temp2]);
         } else if (index === 0) {
           var temprowzero = boardstate[index].splice(sindex, 1, 0);
-          var temp0 = boardstate.splice(sindex, 1, [temprowzero]).flat();
-          console.log("Temp 1:" + temp1);
-          console.log("Temp 2:" + temp2);
-          console.log("Temp 0:" + temp0);
+          var temp0 = boardstate.splice(index, 1, [temprowzero]).flat();
           var temprow = boardstate[zeroindex].splice(zerosindex, 1, value);
           var temp2 = [...boardstate[2]];
           console.log("Temp 1:" + temp1);
           var temp1 = boardstate.splice(zeroindex, 1, [temprow]).flat();
+          console.log("Temp 0:" + temp0);
+          console.log("Temp 1:" + temp1);
           console.log("Temp 2:" + temp2);
           setboardstate([temp0, temp1, temp2]);
         }
