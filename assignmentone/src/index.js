@@ -15,8 +15,8 @@ import {
 function App() {
   const board = [
     [8, 7, 6],
-    [3, 4, 5],
-    [0, 2, 1],
+    [3, 4, 0],
+    [5, 2, 1],
   ];
 
   const [boardstate, setboardstate] = useState(board);
