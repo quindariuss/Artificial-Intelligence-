@@ -16,8 +16,8 @@ import {
 function App() {
   const board = [
     [1, 7, 8],
-    [3, 5, 4],
-    [6, 2, 0],
+    [3, 0, 4],
+    [6, 2, 5],
   ];
   const [top, settop] = useState(false);
   const [right, setright] = useState(false);
@@ -30,6 +30,15 @@ function App() {
   useEffect(() => {
     if (nearzero) {
       console.log("I shall move");
+      if (zerodir === "above") {
+        console.log("up");
+      } else if (zerodir === "below") {
+        console.log("down");
+      } else if (zerodir === "right") {
+        console.log("right");
+      } else if (zerodir === "left") {
+        console.log("left");
+      }
     }
   });
   function handleClick(index, sindex) {
