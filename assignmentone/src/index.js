@@ -1,5 +1,5 @@
 import react from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import reactdom from "react-dom";
 import {
   ChakraProvider,
@@ -24,15 +24,21 @@ function App() {
   const [left, setleft] = useState(false);
   const [bottom, setbottom] = useState(false);
   const [nearzero, setnearzero] = useState(false);
-
+  const [zerodir, setzerodir] = useState("nowhere");
   const [boardstate, setboardstate] = useState(board);
 
+  useEffect(() => {
+    if (nearzero) {
+      console.log("I shall move");
+    }
+  });
   function handleClick(index, sindex) {
     setright(false);
     setleft(false);
     setbottom(false);
     settop(false);
     setnearzero(false);
+    setzerodir("nowhere");
     var value = boardstate[index][sindex];
     console.log("Index: " + index + "\nSub Index: " + sindex);
 
@@ -42,12 +48,14 @@ function App() {
       if (boardstate[index + 1][sindex] === 0) {
         console.log("I am left to a zero");
         setnearzero(true);
+        setzerodir("left");
       }
       if (sindex === 0) {
         settop(true);
         if (boardstate[index][sindex + 1] === 0) {
           console.log("I have a zero below me");
           setnearzero(true);
+          setzerodir("below");
         }
         console.log("I am top");
       } else if (sindex === 2) {
@@ -57,16 +65,19 @@ function App() {
         if (boardstate[index][sindex - 1] === 0) {
           console.log("I have a zero above me");
           setnearzero(true);
+          setzerodir("above");
         }
       } else {
         console.log("I am vertially middle");
         if (boardstate[index][sindex + 1] === 0) {
           console.log("I have a zero below me");
           setnearzero(true);
+          setzerodir("below");
         }
         if (boardstate[index][sindex - 1] === 0) {
           console.log("I have a zero above me");
           setnearzero(true);
+          setzerodir("above");
         }
       }
     } else if (index === 2) {
@@ -75,6 +86,7 @@ function App() {
       if (boardstate[index - 1][sindex] === 0) {
         console.log("I am right to a zero");
         setnearzero(true);
+        setzerodir("right");
       }
       if (sindex === 0) {
         settop(true);
@@ -82,6 +94,7 @@ function App() {
         if (boardstate[index][sindex + 1] === 0) {
           console.log("I have a zero below me");
           setnearzero(true);
+          setzerodir("below");
         }
       } else if (sindex === 2) {
         setbottom(true);
@@ -89,16 +102,19 @@ function App() {
         if (boardstate[index][sindex - 1] === 0) {
           console.log("I have a zero above me");
           setnearzero(true);
+          setzerodir("above");
         }
       } else {
         console.log("I am vertially middle");
         if (boardstate[index][sindex + 1] === 0) {
           console.log("I have a zero below me");
           setnearzero(true);
+          setzerodir("below");
         }
         if (boardstate[index][sindex - 1] === 0) {
           console.log("I have a zero above me");
           setnearzero(true);
+          setzerodir("above");
         }
       }
     } else {
@@ -107,10 +123,12 @@ function App() {
       if (boardstate[index + 1][sindex] === 0) {
         console.log("I am left to a zero");
         setnearzero(true);
+        setzerodir("left");
       }
       if (boardstate[index - 1][sindex] === 0) {
-        console.log("I am left to a zero");
+        console.log("I am right to a zero");
         setnearzero(true);
+        setzerodir("right");
       }
 
       if (sindex === 0) {
@@ -119,6 +137,7 @@ function App() {
         if (boardstate[index][sindex + 1] === 0) {
           console.log("I have a zero below me");
           setnearzero(true);
+          setzerodir("below");
         }
       } else if (sindex === 2) {
         setbottom(true);
@@ -126,16 +145,19 @@ function App() {
         if (boardstate[index][sindex - 1] === 0) {
           console.log("I have a zero above me");
           setnearzero(true);
+          setzerodir("above");
         }
       } else {
         console.log("I am vertially middle");
         if (boardstate[index][sindex + 1] === 0) {
           console.log("I have a zero below me");
           setnearzero(true);
+          setzerodir("below");
         }
         if (boardstate[index][sindex - 1] === 0) {
           console.log("I have a zero above me");
           setnearzero(true);
+          setzerodir("above");
         }
       }
     }
@@ -238,6 +260,7 @@ function App() {
   return (
     <Center p="20">
       <Badge colorScheme={nearzero ? "green" : "red"}>Near Zero</Badge>
+      <Badge colorScheme={nearzero ? "green" : "red"}>{zerodir}</Badge>
       <HStack>
         {boardstate.map((items, index) => {
           return (
