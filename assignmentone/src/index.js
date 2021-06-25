@@ -48,11 +48,11 @@ function App() {
       if (board[index + 1][sindex] === board[zeroindex][zerosindex]) {
         console.log("swap left");
         console.log(value);
-        var temprowzero = board[index].splice(sindex, 1, 0);
-        var temprow = board[zeroindex].splice(zerosindex, 1, value);
-        var temp0 = board.splice(sindex, 1, [temprowzero]).flat();
+        var temprowzero = boardstate[index].splice(sindex, 1, 0);
+        var temprow = boardstate[zeroindex].splice(zerosindex, 1, value);
+        var temp0 = boardstate.splice(sindex, 1, [temprowzero]).flat();
         var temp1 = [...boardstate[1]];
-        var temp2 = board.splice(zeroindex, 1, [temprow]).flat();
+        var temp2 = boardstate.splice(zeroindex, 1, [temprow]).flat();
         console.log("Temp 0:" + temp0);
         console.log("Temp 1:" + temp1);
         console.log("Temp 2:" + temp2);
