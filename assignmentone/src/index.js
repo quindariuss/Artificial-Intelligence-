@@ -26,6 +26,7 @@ function App() {
 
     var zeroindex = 0;
     var zerosindex = 0;
+    var value = boardstate[index][sindex];
 
     for (let i = 0; i < boardstate.length; i++) {
       for (let t = 0; t < boardstate.length; t++) {
@@ -37,8 +38,8 @@ function App() {
     }
 
     console.log("Board Index: " + boardstate[0]);
-    console.log("Board Index: " + board[1]);
-    console.log("Board Index: " + board[2]);
+    console.log("Board Index: " + boardstate[1]);
+    console.log("Board Index: " + boardstate[2]);
 
     console.log("Zero Index was : " + zeroindex + " " + zerosindex);
     console.log("Index length: " + index);
@@ -46,20 +47,32 @@ function App() {
     if (index < board.length - 1) {
       if (board[index + 1][sindex] === board[zeroindex][zerosindex]) {
         console.log("swap left");
-        var value = board[index][sindex];
-        var temp = [...board];
+        console.log(value);
         var temprowzero = board[index].splice(sindex, 1, 0);
         var temprow = board[zeroindex].splice(zerosindex, 1, value);
         var temp0 = board.splice(sindex, 1, [temprowzero]).flat();
-        var temp1 = [...board[1]];
-        var temp2 = [...board[2]];
+        var temp1 = [...boardstate[1]];
         var temp2 = board.splice(zeroindex, 1, [temprow]).flat();
+        console.log("Temp 0:" + temp0);
+        console.log("Temp 1:" + temp1);
+        console.log("Temp 2:" + temp2);
         setboardstate([temp0, temp1, temp2]);
       }
     }
     if (index > 0) {
+      console.log("Value: " + value);
       if (board[index - 1][sindex] === board[zeroindex][zerosindex]) {
         console.log("swap right");
+        var value = boardstate[index][sindex];
+        var temprowzero = boardstate[index].splice(sindex, 1, 0);
+        var temprow = boardstate[zeroindex].splice(zerosindex, 1, value);
+        var temp1 = [...boardstate[1]];
+        var temp0 = [...boardstate[0]];
+        var temp2 = boardstate.splice(index, 1, [temprow]).flat();
+        console.log("Temp 0:" + temp0);
+        console.log("Temp 1:" + temp1);
+        console.log("Temp 2:" + temp2);
+        setboardstate([temp0, temp1, temp2]);
       }
     }
   }
