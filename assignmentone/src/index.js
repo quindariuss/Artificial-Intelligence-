@@ -44,23 +44,36 @@ function App() {
     console.log("Zero Index was : " + zeroindex + " " + zerosindex);
     console.log("Index length: " + index);
     console.log("Total length: " + board[index]);
-    if (index < board.length) {
+    if (index < board.length - 1) {
       if (boardstate[index + 1][sindex] === boardstate[zeroindex][zerosindex]) {
         console.log("swap left");
         console.log(value);
-        var temprowzero = boardstate[index].splice(sindex, 1, 0);
-        var temprow = boardstate[zeroindex].splice(zerosindex, 1, value);
-        var temp0 = boardstate.splice(sindex, 1, [temprowzero]).flat();
-        var temp1 = [...boardstate[1]];
-        var temp2 = boardstate.splice(zeroindex, 1, [temprow]).flat();
-        console.log("Temp 0:" + temp0);
-        console.log("Temp 1:" + temp1);
-        console.log("Temp 2:" + temp2);
-        setboardstate([temp0, temp1, temp2]);
+        if (index === 1) {
+          var temprowzero = boardstate[index].splice(sindex, 1, 0);
+          var temp0 = boardstate.splice(sindex, 1, [temprowzero]).flat();
+          console.log("Temp 0:" + temp0);
+          var temprow = boardstate[zeroindex].splice(zerosindex, 1, value);
+          var temp1 = [...boardstate[1]];
+          console.log("Temp 1:" + temp1);
+          var temp2 = boardstate.splice(zeroindex, 1, [temprow]).flat();
+          console.log("Temp 2:" + temp2);
+          setboardstate([temp0, temp1, temp2]);
+        } else if (index === 0) {
+          var temprowzero = boardstate[index].splice(sindex, 1, 0);
+          var temp0 = boardstate.splice(sindex, 1, [temprowzero]).flat();
+          console.log("Temp 0:" + temp0);
+          var temprow = boardstate[zeroindex].splice(zerosindex, 1, value);
+          var temp2 = [...boardstate[2]];
+          console.log("Temp 1:" + temp1);
+          var temp1 = boardstate.splice(zeroindex, 1, [temprow]).flat();
+          console.log("Temp 2:" + temp2);
+          setboardstate([temp0, temp1, temp2]);
+        }
       }
     }
     if (index > 0) {
       console.log("Value: " + value);
+      console.log(index);
       if (board[index - 1][sindex] === board[zeroindex][zerosindex]) {
         console.log("swap right");
         var value = boardstate[index][sindex];
