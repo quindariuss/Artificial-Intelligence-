@@ -44,8 +44,8 @@ function App() {
     console.log("Zero Index was : " + zeroindex + " " + zerosindex);
     console.log("Index length: " + index);
     console.log("Total length: " + board[index]);
-    if (index < board.length - 1) {
-      if (board[index + 1][sindex] === board[zeroindex][zerosindex]) {
+    if (index < board.length) {
+      if (boardstate[index + 1][sindex] === boardstate[zeroindex][zerosindex]) {
         console.log("swap left");
         console.log(value);
         var temprowzero = boardstate[index].splice(sindex, 1, 0);
