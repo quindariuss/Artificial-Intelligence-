@@ -15,15 +15,13 @@ import {
 function App() {
   const board = [
     [8, 7, 6],
-    [3, 4, 0],
+    [3, 0, 4],
     [5, 2, 1],
   ];
 
   const [boardstate, setboardstate] = useState(board);
 
   function handleClick(index, sindex) {
-    console.log("Button Pressed:" + index + ", " + sindex);
-
     var zeroindex = 0;
     var zerosindex = 0;
     var value = boardstate[index][sindex];
@@ -37,13 +35,34 @@ function App() {
       }
     }
 
-    console.log("Board Index: " + boardstate[0]);
-    console.log("Board Index: " + boardstate[1]);
-    console.log("Board Index: " + boardstate[2]);
-
+    console.log("Button Pressed:" + index + ", " + sindex);
+    console.log("Board Index 0: " + boardstate[0]);
+    console.log("Board Index 1: " + boardstate[1]);
+    console.log("Board Index 2: " + boardstate[2]);
     console.log("Zero Index was : " + zeroindex + " " + zerosindex);
-    console.log("Index length: " + index);
-    console.log("Total length: " + board[index]);
+    if (sindex < boardstate[index].length - 1) {
+      console.log("inside top");
+      if (boardstate[index][sindex + 1] === boardstate[zeroindex][zerosindex]) {
+        console.log("hello top");
+        if (sindex === 0) {
+          console.log("hello tippy top");
+        }
+        if (sindex === 1) {
+          console.log("hello middle top");
+        }
+      }
+    }
+    if (sindex > 0) {
+      console.log("inside bottom");
+      if (boardstate[index][sindex - 1] === boardstate[zeroindex][zerosindex]) {
+        if (sindex === 2) {
+          console.log("hello rock bottom");
+        }
+        if (sindex === 1) {
+          console.log("hello middle bottom");
+        }
+      }
+    }
     if (index < board.length - 1) {
       if (boardstate[index + 1][sindex] === boardstate[zeroindex][zerosindex]) {
         console.log("swap right zero");
@@ -71,8 +90,6 @@ function App() {
       }
     }
     if (index > 0) {
-      console.log("Value: " + value);
-      console.log(index);
       if (board[index - 1][sindex] === board[zeroindex][zerosindex]) {
         console.log("swap left zero ");
         if (index === 2) {
