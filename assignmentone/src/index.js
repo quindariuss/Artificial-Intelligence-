@@ -15,8 +15,8 @@ import {
 
 function App() {
   const board = [
-    [1, 7, 8],
-    [3, 0, 4],
+    [1, 0, 8],
+    [3, 7, 4],
     [6, 2, 5],
   ];
   const [top, settop] = useState(false);
@@ -26,21 +26,10 @@ function App() {
   const [nearzero, setnearzero] = useState(false);
   const [zerodir, setzerodir] = useState("nowhere");
   const [boardstate, setboardstate] = useState(board);
+  const [inputindex, setinputindex] = useState(0);
+  const [inputsubindex, setinputsubindex] = useState(0);
 
-  useEffect(() => {
-    if (nearzero) {
-      console.log("I shall move");
-      if (zerodir === "above") {
-        console.log("up");
-      } else if (zerodir === "below") {
-        console.log("down");
-      } else if (zerodir === "right") {
-        console.log("right");
-      } else if (zerodir === "left") {
-        console.log("left");
-      }
-    }
-  });
+  useEffect(() => {});
   function handleClick(index, sindex) {
     setright(false);
     setleft(false);
@@ -48,6 +37,8 @@ function App() {
     settop(false);
     setnearzero(false);
     setzerodir("nowhere");
+    setinputindex(index);
+    setinputsubindex(sindex);
     var value = boardstate[index][sindex];
     console.log("Index: " + index + "\nSub Index: " + sindex);
 
@@ -171,98 +162,49 @@ function App() {
       }
     }
 
-    {
-      /* for (let i = 0; i < boardstate.length; i++) {
-      for (let t = 0; t < boardstate.length; t++) {
-        if (boardstate[i][t] === 0) {
-          zeroindex = i;
-          zerosindex = t;
-        }
-      }
-    }
-
-    console.log("Button Pressed:" + index + ", " + sindex);
-    console.log("Board Index 0: " + boardstate[0]);
-    console.log("Board Index 1: " + boardstate[1]);
-    console.log("Board Index 2: " + boardstate[2]);
-    console.log("Zero Index was : " + zeroindex + " " + zerosindex);
-    if (index < board.length - 1) {
-      if (boardstate[index + 1][sindex] === boardstate[zeroindex][zerosindex]) {
-        console.log("swap right zero");
-        console.log(value);
-        if (index === 1) {
-          var temprowzero = boardstate[index].splice(sindex, 1, 0);
-          var temprow = boardstate[zeroindex].splice(zerosindex, 1, value);
-
-          var temp1 = boardstate.splice(index, 1, [temprowzero]).flat();
-          var temp0 = [...boardstate[0]];
-          var temp2 = boardstate.splice(zeroindex, 1, [temprow]).flat();
-          setboardstate([temp0, temp1, temp2]);
-        } else if (index === 0) {
-          var temprowzero = boardstate[index].splice(sindex, 1, 0);
-          var temp0 = boardstate.splice(index, 1, [temprowzero]).flat();
-          var temprow = boardstate[zeroindex].splice(zerosindex, 1, value);
-          var temp2 = [...boardstate[2]];
-          console.log("Temp 1:" + temp1);
-          var temp1 = boardstate.splice(zeroindex, 1, [temprow]).flat();
-          console.log("Temp 0:" + temp0);
-          console.log("Temp 1:" + temp1);
-          console.log("Temp 2:" + temp2);
-          setboardstate([temp0, temp1, temp2]);
-        }
-      }
-    }
-    if (index > 0) {
-      if (board[index - 1][sindex] === board[zeroindex][zerosindex]) {
-        console.log("swap left zero ");
-        if (index === 2) {
-          var temprowzero = boardstate[index].splice(sindex, 1, 0);
-          var temprow = boardstate[zeroindex].splice(zerosindex, 1, value);
-          var temp1 = [...boardstate[1]];
-          var temp0 = [...boardstate[0]];
-          var temp2 = boardstate.splice(index, 1, [temprow]).flat();
-          console.log("Temp 0:" + temp0);
-          console.log("Temp 1:" + temp1);
-          console.log("Temp 2:" + temp2);
-          setboardstate([temp0, temp1, temp2]);
-        } else if (index === 1) {
-          var temprowzero = boardstate[index].splice(sindex, 1, 0);
-          var temprow = boardstate[zeroindex].splice(zerosindex, 1, value);
-          var temp2 = [...boardstate[2]];
-          var temp0 = boardstate.splice(zeroindex, 1, [temprowzero]).flat();
-          var temp1 = boardstate.splice(index, 1, [temprow]).flat();
-          console.log("Temp 0:" + temp0);
-          console.log("Temp 1:" + temp1);
-          console.log("Temp 2:" + temp2);
-          setboardstate([temp0, temp1, temp2]);
-        }
-      }
-    }
-    if (sindex > 0) {
-      console.log("inside bottom");
-      if (boardstate[index][sindex - 1] === boardstate[zeroindex][zerosindex]) {
-        if (sindex === 2) {
-          console.log("hello rock bottom");
-        }
-        if (sindex === 1) {
-          console.log("hello middle bottom");
-        }
-      }
-    }
-    if (sindex < boardstate[index].length - 1) {
-      console.log("inside top");
-      if (boardstate[index][sindex + 1] === boardstate[zeroindex][zerosindex]) {
-        if (sindex === 0) {
-          var zero = 0;
-          var temp = boardstate.splice(1, 1, [0, 3, 4]);
+    if (nearzero) {
+      console.log("I shall move");
+      if (zerodir === "above") {
+        console.log("up");
+        if (left) {
+          var temp = boardstate[index];
           console.log(temp);
-          console.log("hello tippy top");
+          setboardstate([boardstate[0], boardstate[1], boardstate[2]]);
         }
-        if (sindex === 1) {
-          console.log("hello middle top");
+        if (right) {
+          setboardstate([boardstate[0], boardstate[1], boardstate[2]]);
+        } else {
+          setboardstate([boardstate[0], boardstate[1], boardstate[2]]);
+        }
+      } else if (zerodir === "below") {
+        console.log("down");
+        if (left) {
+          setboardstate([boardstate[0], boardstate[1], boardstate[2]]);
+        }
+        if (right) {
+          setboardstate([boardstate[0], boardstate[1], boardstate[2]]);
+        } else {
+          setboardstate([boardstate[0], boardstate[1], boardstate[2]]);
+        }
+      } else if (zerodir === "right") {
+        console.log("right");
+        if (top) {
+          setboardstate([boardstate[0], boardstate[1], boardstate[2]]);
+        } else if (bottom) {
+          setboardstate([boardstate[0], boardstate[1], boardstate[2]]);
+        } else {
+          setboardstate([boardstate[0], boardstate[1], boardstate[2]]);
+        }
+      } else if (zerodir === "left") {
+        console.log("left");
+        if (top) {
+          setboardstate([boardstate[0], boardstate[1], boardstate[2]]);
+        } else if (bottom) {
+          setboardstate([boardstate[0], boardstate[1], boardstate[2]]);
+        } else {
+          setboardstate([boardstate[0], boardstate[1], boardstate[2]]);
         }
       }
-    } */
     }
   }
 
