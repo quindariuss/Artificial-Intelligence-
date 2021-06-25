@@ -38,15 +38,21 @@ function App() {
     if (zeroindex === index + 1 && zerosindex === sindex) {
       console.log("swap");
       var temp = [...board];
-      var temprow = board[index].splice(sindex, 1, 10);
+      var temprowzero = board[index].splice(sindex, 1, 0);
+      var temprow = board[zeroindex].splice(
+        zerosindex,
+        1,
+        board[index][sindex]
+      );
       console.log(temp);
-      var temp0 = board.splice(sindex, 1, [temprow]);
+      var temp0 = board.splice(sindex, 1, [temprow]).flat();
       var temp1 = [...board[1]];
       var temp2 = [...board[2]];
       console.log(temp);
       console.log(temp0);
       console.log(temp1);
       console.log(temp2);
+      setboardstate([temp0, temp1, temp2]);
     }
   }
 
