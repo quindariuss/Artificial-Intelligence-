@@ -56,23 +56,27 @@ function App() {
       console.log("I am top left");
       var temp0 = [[], [], []];
       var temp1 = [[], [], []];
+      console.log("I could've move in two directions");
     }
     if (zeroindex === 0 && zerosubindex === 1) {
       console.log("I am middle left");
       var temp0 = [[], [], []];
       var temp1 = [[], [], []];
       var temp2 = [[], [], []];
+      console.log("I could've move in three directions");
     }
     if (zeroindex === 0 && zerosubindex === 2) {
       console.log("I am bottom left");
       var temp0 = [[], [], []];
       var temp1 = [[], [], []];
+      console.log("I could've move in two directions");
     }
     if (zeroindex === 1 && zerosubindex === 0) {
       console.log("I am top middle");
       var temp0 = [[], [], []];
       var temp1 = [[], [], []];
       var temp2 = [[], [], []];
+      console.log("I could've move in three directions");
     }
     if (zeroindex === 1 && zerosubindex === 1) {
       console.log("I am middle middle");
@@ -80,28 +84,33 @@ function App() {
       var temp1 = [[], [], []];
       var temp2 = [[], [], []];
       var temp3 = [[], [], []];
+      console.log("I could've move in four directions");
     }
     if (zeroindex === 1 && zerosubindex === 2) {
       console.log("I am bottom middle");
       var temp0 = [[], [], []];
       var temp1 = [[], [], []];
       var temp2 = [[], [], []];
+      console.log("I could've move in three directions");
     }
     if (zeroindex === 2 && zerosubindex === 0) {
       console.log("I am top right");
       var temp0 = [[], [], []];
       var temp1 = [[], [], []];
+      console.log("I could've move in two directions");
     }
     if (zeroindex === 2 && zerosubindex === 1) {
       console.log("I am middle right");
       var temp0 = [[], [], []];
       var temp1 = [[], [], []];
       var temp2 = [[], [], []];
+      console.log("I could've've move in three directions");
     }
     if (zeroindex === 2 && zerosubindex === 2) {
       console.log("I am bottom right");
       var temp0 = [[], [], []];
       var temp1 = [[], [], []];
+      console.log("I could've move in two directions");
     }
   }
 
@@ -191,7 +200,6 @@ function App() {
           var temprow = boardstate[zeroindex].splice(zerosindex, 1, value);
           var temp2 = [...boardstate[2]];
           var temp1 = boardstate.splice(zeroindex, 1, [temprow]).flat();
-
           setboardstate([temp0, temp1, temp2]);
         }
       }
