@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 
 function App() {
-  function movedown(index, sindex, zeroindex, zerosindex, value) {
+  function movedown(index, sindex, value) {
     var temp = [...boardstate[index]];
     temp.splice(sindex, 1, 0);
     temp.splice(sindex + 1, 1, value);
@@ -28,7 +28,7 @@ function App() {
       setboardstate([boardstate[0], boardstate[1], temp]);
     }
   }
-  function moveup(index, sindex, zeroindex, zerosindex, value) {
+  function moveup(index, sindex, value) {
     var temp = [...boardstate[index]];
     temp.splice(sindex, 1, 0);
     temp.splice(sindex - 1, 1, value);
@@ -88,15 +88,9 @@ function App() {
     [2, 5, 8],
   ];
 
-  const [top, settop] = useState(false);
-  const [right, setright] = useState(false);
-  const [left, setleft] = useState(false);
-  const [bottom, setbottom] = useState(false);
   const [goal, setgoal] = useState(false);
-  const [zerodir, setzerodir] = useState("nowhere");
   const [boardstate, setboardstate] = useState(board);
-  const [inputindex, setinputindex] = useState(0);
-  const [inputsubindex, setinputsubindex] = useState(0);
+
   const [corrects, setcorrects] = useState([]);
   const [g, setg] = useState(0);
   const [h, seth] = useState([]);
