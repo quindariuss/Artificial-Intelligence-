@@ -14,6 +14,34 @@ import {
 } from "@chakra-ui/react";
 
 function App() {
+  function movedown(index, sindex, zeroindex, zerosindex, value) {
+    var temp = [...boardstate[index]];
+    temp.splice(sindex, 1, 0);
+    temp.splice(sindex + 1, 1, value);
+    if (index === 0) {
+      setboardstate([temp, boardstate[1], boardstate[2]]);
+    }
+    if (index === 1) {
+      setboardstate([boardstate[0], temp, boardstate[2]]);
+    }
+    if (index === 2) {
+      setboardstate([boardstate[0], boardstate[1], temp]);
+    }
+  }
+  function moveup(index, sindex, zeroindex, zerosindex, value) {
+    var temp = [...boardstate[index]];
+    temp.splice(sindex, 1, 0);
+    temp.splice(sindex - 1, 1, value);
+    if (index === 0) {
+      setboardstate([temp, boardstate[1], boardstate[2]]);
+    }
+    if (index === 1) {
+      setboardstate([boardstate[0], temp, boardstate[2]]);
+    }
+    if (index === 2) {
+      setboardstate([boardstate[0], boardstate[1], temp]);
+    }
+  }
   function moveright(index, sindex, zeroindex, zerosindex, value) {
     if (index === 1) {
       var temprowzero = boardstate[index].splice(sindex, 1, 0);
@@ -189,37 +217,14 @@ function App() {
 
     if (sindex < board.length - 1) {
       if (boardstate[index][sindex + 1] === boardstate[zeroindex][zerosindex]) {
-        var temp = [...boardstate[index]];
-        temp.splice(sindex, 1, 0);
-        temp.splice(sindex + 1, 1, value);
-        if (index === 0) {
-          setboardstate([temp, boardstate[1], boardstate[2]]);
-        }
-        if (index === 1) {
-          setboardstate([boardstate[0], temp, boardstate[2]]);
-        }
-        if (index === 2) {
-          setboardstate([boardstate[0], boardstate[1], temp]);
-        }
+        movedown(index, sindex, zeroindex, zerosindex, value);
       }
     }
     if (sindex > 0) {
       if (boardstate[index][sindex - 1] === boardstate[zeroindex][zerosindex]) {
-        var temp = [...boardstate[index]];
-        temp.splice(sindex, 1, 0);
-        temp.splice(sindex - 1, 1, value);
-        if (index === 0) {
-          setboardstate([temp, boardstate[1], boardstate[2]]);
-        }
-        if (index === 1) {
-          setboardstate([boardstate[0], temp, boardstate[2]]);
-        }
-        if (index === 2) {
-          setboardstate([boardstate[0], boardstate[1], temp]);
-        }
+        moveup(index, sindex, zeroindex, zerosindex, value);
       }
     }
-
     if (index < board.length - 1) {
       if (boardstate[index + 1][sindex] === boardstate[zeroindex][zerosindex]) {
         moveright(index, sindex, zeroindex, zerosindex, value);
