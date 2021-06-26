@@ -14,6 +14,41 @@ import {
 } from "@chakra-ui/react";
 
 function App() {
+  function moveright(index, sindex, zeroindex, zerosindex, value) {
+    if (index === 1) {
+      var temprowzero = boardstate[index].splice(sindex, 1, 0);
+      var temprow = boardstate[zeroindex].splice(zerosindex, 1, value);
+      var temp1 = boardstate.splice(index, 1, [temprowzero]).flat();
+      var temp0 = [...boardstate[0]];
+      var temp2 = boardstate.splice(zeroindex, 1, [temprow]).flat();
+      setboardstate([temp0, temp1, temp2]);
+    } else if (index === 0) {
+      var temprowzero = boardstate[index].splice(sindex, 1, 0);
+      var temp0 = boardstate.splice(index, 1, [temprowzero]).flat();
+      var temprow = boardstate[zeroindex].splice(zerosindex, 1, value);
+      var temp2 = [...boardstate[2]];
+      var temp1 = boardstate.splice(zeroindex, 1, [temprow]).flat();
+      setboardstate([temp0, temp1, temp2]);
+    }
+  }
+  function moveleft(index, sindex, zeroindex, zerosindex, value) {
+    if (index === 2) {
+      var temprowzero = boardstate[index].splice(sindex, 1, 0);
+      var temprow = boardstate[zeroindex].splice(zerosindex, 1, value);
+      var temp1 = [...boardstate[1]];
+      var temp0 = [...boardstate[0]];
+      var temp2 = boardstate.splice(index, 1, [temprow]).flat();
+      setboardstate([temp0, temp1, temp2]);
+    } else if (index === 1) {
+      var temprowzero = boardstate[index].splice(sindex, 1, 0);
+      var temprow = boardstate[zeroindex].splice(zerosindex, 1, value);
+      var temp2 = [...boardstate[2]];
+      var temp0 = boardstate.splice(zeroindex, 1, [temprowzero]).flat();
+      var temp1 = boardstate.splice(index, 1, [temprow]).flat();
+      setboardstate([temp0, temp1, temp2]);
+    }
+  }
+
   const board = [
     [1, 7, 8],
     [3, 0, 4],
@@ -187,43 +222,13 @@ function App() {
 
     if (index < board.length - 1) {
       if (boardstate[index + 1][sindex] === boardstate[zeroindex][zerosindex]) {
-        if (index === 1) {
-          var temprowzero = boardstate[index].splice(sindex, 1, 0);
-          var temprow = boardstate[zeroindex].splice(zerosindex, 1, value);
-          var temp1 = boardstate.splice(index, 1, [temprowzero]).flat();
-          var temp0 = [...boardstate[0]];
-          var temp2 = boardstate.splice(zeroindex, 1, [temprow]).flat();
-          setboardstate([temp0, temp1, temp2]);
-        } else if (index === 0) {
-          var temprowzero = boardstate[index].splice(sindex, 1, 0);
-          var temp0 = boardstate.splice(index, 1, [temprowzero]).flat();
-          var temprow = boardstate[zeroindex].splice(zerosindex, 1, value);
-          var temp2 = [...boardstate[2]];
-          var temp1 = boardstate.splice(zeroindex, 1, [temprow]).flat();
-          setboardstate([temp0, temp1, temp2]);
-        }
+        moveright(index, sindex, zeroindex, zerosindex, value);
       }
     }
     if (index > 0) {
       if (board[index - 1][sindex] === board[zeroindex][zerosindex]) {
         console.log("swap left zero ");
-        if (index === 2) {
-          var temprowzero = boardstate[index].splice(sindex, 1, 0);
-          var temprow = boardstate[zeroindex].splice(zerosindex, 1, value);
-          var temp1 = [...boardstate[1]];
-          var temp0 = [...boardstate[0]];
-          var temp2 = boardstate.splice(index, 1, [temprow]).flat();
-
-          setboardstate([temp0, temp1, temp2]);
-        } else if (index === 1) {
-          var temprowzero = boardstate[index].splice(sindex, 1, 0);
-          var temprow = boardstate[zeroindex].splice(zerosindex, 1, value);
-          var temp2 = [...boardstate[2]];
-          var temp0 = boardstate.splice(zeroindex, 1, [temprowzero]).flat();
-          var temp1 = boardstate.splice(index, 1, [temprow]).flat();
-
-          setboardstate([temp0, temp1, temp2]);
-        }
+        moveleft(index, sindex, zeroindex, zerosindex, value);
       }
     }
   }
