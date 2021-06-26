@@ -19,18 +19,25 @@ function App() {
     [3, 0, 4],
     [6, 2, 5],
   ];
+  const goalstate = [
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+  ];
+
   const [top, settop] = useState(false);
   const [right, setright] = useState(false);
   const [left, setleft] = useState(false);
   const [bottom, setbottom] = useState(false);
-  const [nearzero, setnearzero] = useState(false);
+  const [goal, setgoal] = useState(false);
   const [zerodir, setzerodir] = useState("nowhere");
   const [boardstate, setboardstate] = useState(board);
   const [inputindex, setinputindex] = useState(0);
   const [inputsubindex, setinputsubindex] = useState(0);
 
   useEffect(() => {
-    {
+    if (boardstate === goalstate) {
+      setgoal(true);
     }
   });
   function handleClick(index, sindex) {
@@ -144,14 +151,17 @@ function App() {
 
   return (
     <Center p="20">
-      <Badge colorScheme={nearzero ? "green" : "red"}>Zero {zerodir}</Badge>
       <HStack>
         {boardstate.map((items, index) => {
           return (
             <VStack>
               {items.map((sitem, sindex) => {
                 return (
-                  <Button onClick={() => handleClick(index, sindex)}>
+                  <Button
+                    size="lg"
+                    opacity={sitem === 0 ? "0" : "1"}
+                    onClick={() => handleClick(index, sindex)}
+                  >
                     {sitem}
                   </Button>
                 );
