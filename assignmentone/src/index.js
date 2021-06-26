@@ -52,29 +52,7 @@ function App() {
     console.log("Board Index 1: " + boardstate[1]);
     console.log("Board Index 2: " + boardstate[2]);
     console.log("Zero Index was : " + zeroindex + " " + zerosindex);
-    if (sindex < boardstate[index].length - 1) {
-      console.log("inside top");
-      if (boardstate[index][sindex + 1] === boardstate[zeroindex][zerosindex]) {
-        console.log("hello top");
-        if (sindex === 0) {
-          console.log("hello tippy top");
-        }
-        if (sindex === 1) {
-          console.log("hello middle top");
-        }
-      }
-    }
-    if (sindex > 0) {
-      console.log("inside bottom");
-      if (boardstate[index][sindex - 1] === boardstate[zeroindex][zerosindex]) {
-        if (sindex === 2) {
-          console.log("hello rock bottom");
-        }
-        if (sindex === 1) {
-          console.log("hello middle bottom");
-        }
-      }
-    }
+
     if (index < board.length - 1) {
       if (boardstate[index + 1][sindex] === boardstate[zeroindex][zerosindex]) {
         console.log("swap right zero");
