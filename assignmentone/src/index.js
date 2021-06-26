@@ -56,25 +56,36 @@ function App() {
     if (sindex < board.length - 1) {
       if (boardstate[index][sindex + 1] === boardstate[zeroindex][zerosindex]) {
         console.log("holla");
-        if (sindex === 0) {
-          var temp = [...boardstate[index]];
-          temp.splice(sindex, 1, 0);
-          temp.splice(sindex + 1, 1, value);
-          if (index === 0) {
-            setboardstate([temp, boardstate[1], boardstate[2]]);
-          }
-          if (index === 1) {
-            setboardstate([boardstate[0], temp, boardstate[2]]);
-          }
-          if (index === 2) {
-            setboardstate([boardstate[0], boardstate[1], temp]);
-          }
+
+        var temp = [...boardstate[index]];
+        temp.splice(sindex, 1, 0);
+        temp.splice(sindex + 1, 1, value);
+        if (index === 0) {
+          setboardstate([temp, boardstate[1], boardstate[2]]);
+        }
+        if (index === 1) {
+          setboardstate([boardstate[0], temp, boardstate[2]]);
+        }
+        if (index === 2) {
+          setboardstate([boardstate[0], boardstate[1], temp]);
         }
       }
     }
     if (sindex > 0) {
       if (boardstate[index][sindex - 1] === boardstate[zeroindex][zerosindex]) {
         console.log("holla back");
+        var temp = [...boardstate[index]];
+        temp.splice(sindex, 1, 0);
+        temp.splice(sindex - 1, 1, value);
+        if (index === 0) {
+          setboardstate([temp, boardstate[1], boardstate[2]]);
+        }
+        if (index === 1) {
+          setboardstate([boardstate[0], temp, boardstate[2]]);
+        }
+        if (index === 2) {
+          setboardstate([boardstate[0], boardstate[1], temp]);
+        }
       }
     }
 
