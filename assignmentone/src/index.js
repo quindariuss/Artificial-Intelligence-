@@ -53,6 +53,31 @@ function App() {
     console.log("Board Index 2: " + boardstate[2]);
     console.log("Zero Index was : " + zeroindex + " " + zerosindex);
 
+    if (sindex < board.length - 1) {
+      if (boardstate[index][sindex + 1] === boardstate[zeroindex][zerosindex]) {
+        console.log("holla");
+        if (sindex === 0) {
+          var temp = [...boardstate[index]];
+          temp.splice(sindex, 1, 0);
+          temp.splice(sindex + 1, 1, value);
+          if (index === 0) {
+            setboardstate([temp, boardstate[1], boardstate[2]]);
+          }
+          if (index === 1) {
+            setboardstate([boardstate[0], temp, boardstate[2]]);
+          }
+          if (index === 2) {
+            setboardstate([boardstate[0], boardstate[1], temp]);
+          }
+        }
+      }
+    }
+    if (sindex > 0) {
+      if (boardstate[index][sindex - 1] === boardstate[zeroindex][zerosindex]) {
+        console.log("holla back");
+      }
+    }
+
     if (index < board.length - 1) {
       if (boardstate[index + 1][sindex] === boardstate[zeroindex][zerosindex]) {
         console.log("swap right zero");
@@ -60,7 +85,6 @@ function App() {
         if (index === 1) {
           var temprowzero = boardstate[index].splice(sindex, 1, 0);
           var temprow = boardstate[zeroindex].splice(zerosindex, 1, value);
-
           var temp1 = boardstate.splice(index, 1, [temprowzero]).flat();
           var temp0 = [...boardstate[0]];
           var temp2 = boardstate.splice(zeroindex, 1, [temprow]).flat();
