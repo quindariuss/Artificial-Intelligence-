@@ -15,8 +15,8 @@ import {
 
 function App() {
   const board = [
-    [1, 0, 8],
-    [3, 7, 4],
+    [1, 7, 8],
+    [3, 0, 4],
     [6, 2, 5],
   ];
   const [top, settop] = useState(false);
@@ -29,7 +29,10 @@ function App() {
   const [inputindex, setinputindex] = useState(0);
   const [inputsubindex, setinputsubindex] = useState(0);
 
-  useEffect(() => {});
+  useEffect(() => {
+    {
+    }
+  });
   function handleClick(index, sindex) {
     setright(false);
     setleft(false);
@@ -161,48 +164,48 @@ function App() {
         }
       }
     }
+    console.log(nearzero);
 
     if (nearzero) {
       console.log("I shall move");
+      //First Checks for above
       if (zerodir === "above") {
         console.log("up");
         if (left) {
-          var temp = boardstate[index];
-          console.log(temp);
-          setboardstate([boardstate[0], boardstate[1], boardstate[2]]);
-        }
-        if (right) {
-          setboardstate([boardstate[0], boardstate[1], boardstate[2]]);
+          console.log("left");
+        } else if (right) {
+          console.log("right");
         } else {
-          setboardstate([boardstate[0], boardstate[1], boardstate[2]]);
+          console.log("middle");
         }
+        var temp = [...boardstate[index]];
+        console.log(temp);
+        temp.splice(sindex, 1, 0);
+        console.log(temp);
+        console.log(value);
+        temp.splice(sindex - 1, 1, value);
+        console.log(temp);
+        setboardstate([boardstate[0], temp, boardstate[2]]);
       } else if (zerodir === "below") {
         console.log("down");
         if (left) {
-          setboardstate([boardstate[0], boardstate[1], boardstate[2]]);
-        }
-        if (right) {
-          setboardstate([boardstate[0], boardstate[1], boardstate[2]]);
+          console.log("left");
+        } else if (right) {
+          console.log("right");
         } else {
-          setboardstate([boardstate[0], boardstate[1], boardstate[2]]);
+          console.log("middle");
         }
       } else if (zerodir === "right") {
         console.log("right");
         if (top) {
-          setboardstate([boardstate[0], boardstate[1], boardstate[2]]);
         } else if (bottom) {
-          setboardstate([boardstate[0], boardstate[1], boardstate[2]]);
         } else {
-          setboardstate([boardstate[0], boardstate[1], boardstate[2]]);
         }
       } else if (zerodir === "left") {
         console.log("left");
         if (top) {
-          setboardstate([boardstate[0], boardstate[1], boardstate[2]]);
         } else if (bottom) {
-          setboardstate([boardstate[0], boardstate[1], boardstate[2]]);
         } else {
-          setboardstate([boardstate[0], boardstate[1], boardstate[2]]);
         }
       }
     }
@@ -210,8 +213,7 @@ function App() {
 
   return (
     <Center p="20">
-      <Badge colorScheme={nearzero ? "green" : "red"}>Near Zero</Badge>
-      <Badge colorScheme={nearzero ? "green" : "red"}>{zerodir}</Badge>
+      <Badge colorScheme={nearzero ? "green" : "red"}>Zero {zerodir}</Badge>
       <HStack>
         {boardstate.map((items, index) => {
           return (
