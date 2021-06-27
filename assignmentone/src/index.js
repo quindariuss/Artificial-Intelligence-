@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 
 function App() {
-  function movedown(index, sindex, value) {
+  function movedown(index, sindex, zeroindex, zerosindex, value) {
     var temp = [...boardstate[index]];
     temp.splice(sindex, 1, 0);
     temp.splice(sindex + 1, 1, value);
@@ -28,18 +28,21 @@ function App() {
       setboardstate([boardstate[0], boardstate[1], temp]);
     }
   }
-  function moveup(index, sindex, value) {
+  function moveup(index, sindex, zeroindex, zerosindex, value) {
     var temp = [...boardstate[index]];
     temp.splice(sindex, 1, 0);
     temp.splice(sindex - 1, 1, value);
     if (index === 0) {
       setboardstate([temp, boardstate[1], boardstate[2]]);
+      return "Hello World";
     }
     if (index === 1) {
       setboardstate([boardstate[0], temp, boardstate[2]]);
+      return "Hello World";
     }
     if (index === 2) {
       setboardstate([boardstate[0], boardstate[1], temp]);
+      return "Hello World";
     }
   }
   function moveright(index, sindex, zeroindex, zerosindex, value) {
@@ -57,6 +60,7 @@ function App() {
       var temp2 = [...boardstate[2]];
       var temp1 = boardstate.splice(zeroindex, 1, [temprow]).flat();
       setboardstate([temp0, temp1, temp2]);
+      return "Hello World";
     }
   }
   function moveleft(index, sindex, zeroindex, zerosindex, value) {
@@ -67,6 +71,7 @@ function App() {
       var temp0 = [...boardstate[0]];
       var temp2 = boardstate.splice(index, 1, [temprow]).flat();
       setboardstate([temp0, temp1, temp2]);
+      return [temp0, temp1, temp2];
     } else if (index === 1) {
       var temprowzero = boardstate[index].splice(sindex, 1, 0);
       var temprow = boardstate[zeroindex].splice(zerosindex, 1, value);
@@ -74,6 +79,7 @@ function App() {
       var temp0 = boardstate.splice(zeroindex, 1, [temprowzero]).flat();
       var temp1 = boardstate.splice(index, 1, [temprow]).flat();
       setboardstate([temp0, temp1, temp2]);
+      return [temp0, temp1, temp2];
     }
   }
 
@@ -88,15 +94,21 @@ function App() {
     [2, 5, 8],
   ];
 
+  const [top, settop] = useState(false);
+  const [right, setright] = useState(false);
+  const [left, setleft] = useState(false);
+  const [bottom, setbottom] = useState(false);
   const [goal, setgoal] = useState(false);
+  const [zerodir, setzerodir] = useState("nowhere");
   const [boardstate, setboardstate] = useState(board);
-
+  const [inputindex, setinputindex] = useState(0);
+  const [inputsubindex, setinputsubindex] = useState(0);
   const [corrects, setcorrects] = useState([]);
   const [g, setg] = useState(0);
   const [h, seth] = useState([]);
   const [pressed, setpressed] = useState(false);
 
-  function AI() {
+  function AI(index, sindex, zeroindex, zerosindex, value) {
     var zeroindex = 0;
     var zerosubindex = 0;
 
@@ -111,9 +123,9 @@ function App() {
     console.log("Zero was at:" + zeroindex + ", " + zerosubindex);
     if (zeroindex === 0 && zerosubindex === 0) {
       console.log("I am top left");
-      var temp0 = [[], [], []];
       var temp1 = [[], [], []];
       console.log("I could've move in two directions");
+      console.log(movedown(index, sindex, zeroindex, zerosindex, value));
     }
     if (zeroindex === 0 && zerosubindex === 1) {
       console.log("I am middle left");
