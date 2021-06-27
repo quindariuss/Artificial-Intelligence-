@@ -13,18 +13,22 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
+var tree = [];
 function App() {
   function movedown(index, sindex, zeroindex, zerosindex, value) {
     var temp = [...boardstate[index]];
     temp.splice(sindex, 1, 0);
     temp.splice(sindex + 1, 1, value);
     if (index === 0) {
+      tree.push([temp, boardstate[1], boardstate[2]]);
       setboardstate([temp, boardstate[1], boardstate[2]]);
     }
     if (index === 1) {
+      tree.push([boardstate[0], temp, boardstate[2]]);
       setboardstate([boardstate[0], temp, boardstate[2]]);
     }
     if (index === 2) {
+      tree.push([boardstate[0], boardstate[1], temp]);
       setboardstate([boardstate[0], boardstate[1], temp]);
     }
   }
@@ -125,7 +129,6 @@ function App() {
       console.log("I am top left");
       var temp1 = [[], [], []];
       console.log("I could've move in two directions");
-      console.log(movedown(index, sindex, zeroindex, zerosindex, value));
     }
     if (zeroindex === 0 && zerosubindex === 1) {
       console.log("I am middle left");
@@ -195,10 +198,12 @@ function App() {
         }
       }
     }
+    console.log({ tree });
     setcorrects(h.flat());
   }, [pressed]);
   function handleClick(index, sindex) {
     AI();
+    console.log({ index }, { sindex });
     setpressed(!pressed);
     var zeroindex = 0;
     var zerosindex = 0;
