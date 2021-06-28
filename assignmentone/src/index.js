@@ -13,23 +13,42 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
+const numbercorrect = function (x) {
+  return 5;
+};
+
 var tree = [];
 function App() {
+  function getH(boardarray) {
+    var inplace = 0;
+    for (let i = 0; i < boardarray.length; i++) {
+      for (let t = 0; t < boardarray.length; t++) {
+        if (boardarray[i][t] === goalstate[i][t]) {
+          inplace++;
+        }
+      }
+    }
+    return inplace;
+  }
+
   function movedown(index, sindex, zeroindex, zerosindex, value) {
     var temp = [...boardstate[index]];
     temp.splice(sindex, 1, 0);
     temp.splice(sindex + 1, 1, value);
     if (index === 0) {
-      tree.push([temp, boardstate[1], boardstate[2]]);
-      setboardstate([temp, boardstate[1], boardstate[2]]);
+      var newboard = [temp, boardstate[1], boardstate[2]];
+      setboardstate(newboard);
+      return getH(newboard);
     }
     if (index === 1) {
-      tree.push([boardstate[0], temp, boardstate[2]]);
-      setboardstate([boardstate[0], temp, boardstate[2]]);
+      var newboard = [boardstate[0], temp, boardstate[2]];
+      setboardstate(newboard);
+      return getH(newboard);
     }
     if (index === 2) {
-      tree.push([boardstate[0], boardstate[1], temp]);
-      setboardstate([boardstate[0], boardstate[1], temp]);
+      var newboard = [boardstate[0], boardstate[1], temp];
+      setboardstate(newboard);
+      return getH(newboard);
     }
   }
   function moveup(index, sindex, zeroindex, zerosindex, value) {
@@ -38,15 +57,18 @@ function App() {
     temp.splice(sindex - 1, 1, value);
     if (index === 0) {
       setboardstate([temp, boardstate[1], boardstate[2]]);
-      return "Hello World";
+      setboardstate([temp, boardstate[1], boardstate[2]]);
+      return getH(newboard);
     }
     if (index === 1) {
+      var newboard = [boardstate[0], temp, boardstate[2]];
       setboardstate([boardstate[0], temp, boardstate[2]]);
-      return "Hello World";
+      return getH(newboard);
     }
     if (index === 2) {
+      var newboard = [boardstate[0], boardstate[1], temp];
       setboardstate([boardstate[0], boardstate[1], temp]);
-      return "Hello World";
+      return getH(newboard);
     }
   }
   function moveright(index, sindex, zeroindex, zerosindex, value) {
@@ -56,6 +78,7 @@ function App() {
       var temp1 = boardstate.splice(index, 1, [temprowzero]).flat();
       var temp0 = [...boardstate[0]];
       var temp2 = boardstate.splice(zeroindex, 1, [temprow]).flat();
+      var newboard = [temp0, temp1, temp2];
       setboardstate([temp0, temp1, temp2]);
     } else if (index === 0) {
       var temprowzero = boardstate[index].splice(sindex, 1, 0);
@@ -63,8 +86,9 @@ function App() {
       var temprow = boardstate[zeroindex].splice(zerosindex, 1, value);
       var temp2 = [...boardstate[2]];
       var temp1 = boardstate.splice(zeroindex, 1, [temprow]).flat();
+      var newboard = [temp0, temp1, temp2];
       setboardstate([temp0, temp1, temp2]);
-      return "Hello World";
+      return getH(newboard);
     }
   }
   function moveleft(index, sindex, zeroindex, zerosindex, value) {
@@ -74,6 +98,7 @@ function App() {
       var temp1 = [...boardstate[1]];
       var temp0 = [...boardstate[0]];
       var temp2 = boardstate.splice(index, 1, [temprow]).flat();
+      var newboard = [temp0, temp1, temp2];
       setboardstate([temp0, temp1, temp2]);
       return [temp0, temp1, temp2];
     } else if (index === 1) {
@@ -82,12 +107,18 @@ function App() {
       var temp2 = [...boardstate[2]];
       var temp0 = boardstate.splice(zeroindex, 1, [temprowzero]).flat();
       var temp1 = boardstate.splice(index, 1, [temprow]).flat();
+      var newboard = [temp0, temp1, temp2];
       setboardstate([temp0, temp1, temp2]);
       return [temp0, temp1, temp2];
     }
   }
 
   const board = [
+    [1, 7, 8],
+    [3, 0, 4],
+    [6, 2, 5],
+  ];
+  const aiboard = [
     [1, 7, 8],
     [3, 0, 4],
     [6, 2, 5],
@@ -105,6 +136,7 @@ function App() {
   const [goal, setgoal] = useState(false);
   const [zerodir, setzerodir] = useState("nowhere");
   const [boardstate, setboardstate] = useState(board);
+  const [aiboardstate, setaiboardstate] = useState(aiboard);
   const [inputindex, setinputindex] = useState(0);
   const [inputsubindex, setinputsubindex] = useState(0);
   const [corrects, setcorrects] = useState([]);
@@ -127,61 +159,40 @@ function App() {
     console.log("Zero was at:" + zeroindex + ", " + zerosubindex);
     if (zeroindex === 0 && zerosubindex === 0) {
       console.log("I am top left");
-      var temp1 = [[], [], []];
       console.log("I could've move in two directions");
+      var num = movedown(index, sindex, zeroindex, zerosindex, value);
+      console.log({ num });
     }
     if (zeroindex === 0 && zerosubindex === 1) {
       console.log("I am middle left");
-      var temp0 = [[], [], []];
-      var temp1 = [[], [], []];
-      var temp2 = [[], [], []];
       console.log("I could've move in three directions");
     }
     if (zeroindex === 0 && zerosubindex === 2) {
       console.log("I am bottom left");
-      var temp0 = [[], [], []];
-      var temp1 = [[], [], []];
       console.log("I could've move in two directions");
     }
     if (zeroindex === 1 && zerosubindex === 0) {
       console.log("I am top middle");
-      var temp0 = [[], [], []];
-      var temp1 = [[], [], []];
-      var temp2 = [[], [], []];
       console.log("I could've move in three directions");
     }
     if (zeroindex === 1 && zerosubindex === 1) {
       console.log("I am middle middle");
-      var temp0 = [[], [], []];
-      var temp1 = [[], [], []];
-      var temp2 = [[], [], []];
-      var temp3 = [[], [], []];
       console.log("I could've move in four directions");
     }
     if (zeroindex === 1 && zerosubindex === 2) {
       console.log("I am bottom middle");
-      var temp0 = [[], [], []];
-      var temp1 = [[], [], []];
-      var temp2 = [[], [], []];
       console.log("I could've move in three directions");
     }
     if (zeroindex === 2 && zerosubindex === 0) {
       console.log("I am top right");
-      var temp0 = [[], [], []];
-      var temp1 = [[], [], []];
       console.log("I could've move in two directions");
     }
     if (zeroindex === 2 && zerosubindex === 1) {
       console.log("I am middle right");
-      var temp0 = [[], [], []];
-      var temp1 = [[], [], []];
-      var temp2 = [[], [], []];
       console.log("I could've've move in three directions");
     }
     if (zeroindex === 2 && zerosubindex === 2) {
       console.log("I am bottom right");
-      var temp0 = [[], [], []];
-      var temp1 = [[], [], []];
       console.log("I could've move in two directions");
     }
   }
@@ -202,7 +213,7 @@ function App() {
     setcorrects(h.flat());
   }, [pressed]);
   function handleClick(index, sindex) {
-    AI();
+    AI(index, sindex, zeroindex, zerosindex, value);
     console.log({ index }, { sindex });
     setpressed(!pressed);
     var zeroindex = 0;
