@@ -7,6 +7,7 @@ import {
   Heading,
   Text,
   Link,
+  Box,
   Button,
   Badge,
   HStack,
@@ -38,17 +39,14 @@ function App() {
     if (index === 0) {
       var newboard = [temp, boardstate[1], boardstate[2]];
       setboardstate(newboard);
-      return getH(newboard);
     }
     if (index === 1) {
       var newboard = [boardstate[0], temp, boardstate[2]];
       setboardstate(newboard);
-      return getH(newboard);
     }
     if (index === 2) {
       var newboard = [boardstate[0], boardstate[1], temp];
       setboardstate(newboard);
-      return getH(newboard);
     }
   }
   function moveup(index, sindex, zeroindex, zerosindex, value) {
@@ -58,17 +56,14 @@ function App() {
     if (index === 0) {
       setboardstate([temp, boardstate[1], boardstate[2]]);
       setboardstate([temp, boardstate[1], boardstate[2]]);
-      return getH(newboard);
     }
     if (index === 1) {
       var newboard = [boardstate[0], temp, boardstate[2]];
       setboardstate([boardstate[0], temp, boardstate[2]]);
-      return getH(newboard);
     }
     if (index === 2) {
       var newboard = [boardstate[0], boardstate[1], temp];
       setboardstate([boardstate[0], boardstate[1], temp]);
-      return getH(newboard);
     }
   }
   function moveright(index, sindex, zeroindex, zerosindex, value) {
@@ -88,7 +83,6 @@ function App() {
       var temp1 = boardstate.splice(zeroindex, 1, [temprow]).flat();
       var newboard = [temp0, temp1, temp2];
       setboardstate([temp0, temp1, temp2]);
-      return getH(newboard);
     }
   }
   function moveleft(index, sindex, zeroindex, zerosindex, value) {
@@ -160,8 +154,6 @@ function App() {
     if (zeroindex === 0 && zerosubindex === 0) {
       console.log("I am top left");
       console.log("I could've move in two directions");
-      var num = movedown(index, sindex, zeroindex, zerosindex, value);
-      console.log({ num });
     }
     if (zeroindex === 0 && zerosubindex === 1) {
       console.log("I am middle left");
@@ -174,6 +166,16 @@ function App() {
     if (zeroindex === 1 && zerosubindex === 0) {
       console.log("I am top middle");
       console.log("I could've move in three directions");
+      console.log(
+        "Correct Value is " +
+          movedown(index, sindex, zeroindex, zerosindex, value)
+      );
+      moveup(index, sindex, zeroindex, zerosindex, value);
+      console.log(
+        "Correct Value is " +
+          moveleft(index, sindex, zeroindex, zerosindex, value)
+      );
+      moveright(index, sindex, zeroindex, zerosindex, value);
     }
     if (zeroindex === 1 && zerosubindex === 1) {
       console.log("I am middle middle");
@@ -213,7 +215,6 @@ function App() {
     setcorrects(h.flat());
   }, [pressed]);
   function handleClick(index, sindex) {
-    AI(index, sindex, zeroindex, zerosindex, value);
     console.log({ index }, { sindex });
     setpressed(!pressed);
     var zeroindex = 0;
@@ -261,31 +262,40 @@ function App() {
   }
 
   return (
-    <Center p="20">
-      <Text>H is {corrects.length}</Text>
-      <HStack>
-        {boardstate.map((items, index) => {
-          return (
-            <VStack>
-              {items.map((sitem, sindex) => {
-                return (
-                  <Button
-                    size="lg"
-                    colorScheme={corrects.includes(sitem) ? "red" : "blue"}
-                    opacity={sitem === 0 ? "0" : "1"}
-                    onClick={() => {
-                      handleClick(index, sindex);
-                    }}
-                  >
-                    {sitem}
-                  </Button>
-                );
-              })}
-            </VStack>
-          );
-        })}
-      </HStack>
-    </Center>
+    <>
+      <Heading margin="5" textAlign="center">
+        8 Puzzle Game
+      </Heading>
+      <Center>
+        <Button textAlign="center"> Solve using A* Algorithm</Button>
+      </Center>
+      <Center p="20">
+        <Box bg="blackAlpha.200" padding="10" borderRadius="10">
+          <HStack>
+            {boardstate.map((items, index) => {
+              return (
+                <VStack>
+                  {items.map((sitem, sindex) => {
+                    return (
+                      <Button
+                        size="lg"
+                        colorScheme={corrects.includes(sitem) ? "red" : "blue"}
+                        opacity={sitem === 0 ? "0" : "1"}
+                        onClick={() => {
+                          handleClick(index, sindex);
+                        }}
+                      >
+                        {sitem}
+                      </Button>
+                    );
+                  })}
+                </VStack>
+              );
+            })}
+          </HStack>
+        </Box>
+      </Center>
+    </>
   );
 }
 
