@@ -31,7 +31,81 @@ function App() {
     }
     return inplace;
   }
+  // Fake move funcitons
+  function movedownempty(index, sindex, zeroindex, zerosindex, value) {
+    var temp = [...boardstate[index]];
+    temp.splice(sindex, 1, 0);
+    temp.splice(sindex + 1, 1, value);
+    if (index === 0) {
+      var newboard = [temp, boardstate[1], boardstate[2]];
+      return getH(newboard);
+    }
+    if (index === 1) {
+      var newboard = [boardstate[0], temp, boardstate[2]];
+      return getH(newboard);
+    }
+    if (index === 2) {
+      var newboard = [boardstate[0], boardstate[1], temp];
+      return getH(newboard);
+    }
+  }
+  function moveupempty(index, sindex, zeroindex, zerosindex, value) {
+    var temp = [...boardstate[index]];
+    temp.splice(sindex, 1, 0);
+    temp.splice(sindex - 1, 1, value);
+    if (index === 0) {
+      return getH([temp, boardstate[1], boardstate[2]]);
+    }
+    if (index === 1) {
+      var newboard = [boardstate[0], temp, boardstate[2]];
+      return getH([boardstate[0], temp, boardstate[2]]);
+    }
+    if (index === 2) {
+      var newboard = [boardstate[0], boardstate[1], temp];
+      return getH([boardstate[0], boardstate[1], temp]);
+    }
+  }
+  function moverightempty(index, sindex, zeroindex, zerosindex, value) {
+    if (index === 1) {
+      var temprowzero = [...boardstate[index].splice(sindex, 1, 0)];
+      var temprow = [...boardstate[zeroindex].splice(zerosindex, 1, value)];
+      var temp1 = [...boardstate.splice(index, 1, [temprowzero]).flat()];
+      var temp0 = [...boardstate[0]];
+      var temp2 = [...boardstate.splice(zeroindex, 1, [temprow]).flat()];
+      var newboard = [temp0, temp1, temp2];
+      return getH([temp0, temp1, temp2]);
+    } else if (index === 0) {
+      var temprowzero = [...boardstate[index].splice(sindex, 1, 0)];
+      var temp0 = [...boardstate.splice(index, 1, [temprowzero]).flat()];
+      var temprow = [...boardstate[zeroindex].splice(zerosindex, 1, value)];
+      var temp2 = [...boardstate[2]];
+      var temp1 = [...boardstate.splice(zeroindex, 1, [temprow]).flat()];
+      var newboard = [temp0, temp1, temp2];
+      return getH([temp0, temp1, temp2]);
+    }
+  }
+  function moveleftempty(index, sindex, zeroindex, zerosindex, value) {
+    if (index === 2) {
+      var temprowzero = boardstate[index].splice(sindex, 1, 0);
+      var temprow = boardstate[zeroindex].splice(zerosindex, 1, value);
+      var temp1 = [...boardstate[1]];
+      var temp0 = [...boardstate[0]];
+      var temp2 = boardstate.splice(index, 1, [temprow]).flat();
+      var newboard = [temp0, temp1, temp2];
+      return getH([temp0, temp1, temp2]);
+      return [temp0, temp1, temp2];
+    } else if (index === 1) {
+      var temprowzero = boardstate[index].splice(sindex, 1, 0);
+      var temprow = boardstate[zeroindex].splice(zerosindex, 1, value);
+      var temp2 = [...boardstate[2]];
+      var temp0 = boardstate.splice(zeroindex, 1, [temprowzero]).flat();
+      var temp1 = boardstate.splice(index, 1, [temprow]).flat();
+      var newboard = [temp0, temp1, temp2];
+      return getH([temp0, temp1, temp2]);
+    }
+  }
 
+  //Real move functions
   function movedown(index, sindex, zeroindex, zerosindex, value) {
     var temp = [...boardstate[index]];
     temp.splice(sindex, 1, 0);
@@ -54,7 +128,6 @@ function App() {
     temp.splice(sindex, 1, 0);
     temp.splice(sindex - 1, 1, value);
     if (index === 0) {
-      setboardstate([temp, boardstate[1], boardstate[2]]);
       setboardstate([temp, boardstate[1], boardstate[2]]);
     }
     if (index === 1) {
@@ -103,7 +176,6 @@ function App() {
       var temp1 = boardstate.splice(index, 1, [temprow]).flat();
       var newboard = [temp0, temp1, temp2];
       setboardstate([temp0, temp1, temp2]);
-      return [temp0, temp1, temp2];
     }
   }
 
@@ -166,16 +238,6 @@ function App() {
     if (zeroindex === 1 && zerosubindex === 0) {
       console.log("I am top middle");
       console.log("I could've move in three directions");
-      console.log(
-        "Correct Value is " +
-          movedown(index, sindex, zeroindex, zerosindex, value)
-      );
-      moveup(index, sindex, zeroindex, zerosindex, value);
-      console.log(
-        "Correct Value is " +
-          moveleft(index, sindex, zeroindex, zerosindex, value)
-      );
-      moveright(index, sindex, zeroindex, zerosindex, value);
     }
     if (zeroindex === 1 && zerosubindex === 1) {
       console.log("I am middle middle");
@@ -230,32 +292,27 @@ function App() {
       }
     }
 
-    {
-      /* console.log("Button Pressed:" + index + ", " + sindex);
-    console.log("Board Index 0: " + boardstate[0]);
-    console.log("Board Index 1: " + boardstate[1]);
-    console.log("Board Index 2: " + boardstate[2]);
-    console.log("Zero Index was : " + zeroindex + " " + zerosindex); */
-    }
-
     if (sindex < board.length - 1) {
       if (boardstate[index][sindex + 1] === boardstate[zeroindex][zerosindex]) {
+        console.log("move down");
         movedown(index, sindex, zeroindex, zerosindex, value);
       }
     }
     if (sindex > 0) {
       if (boardstate[index][sindex - 1] === boardstate[zeroindex][zerosindex]) {
+        console.log("move up");
         moveup(index, sindex, zeroindex, zerosindex, value);
       }
     }
     if (index < board.length - 1) {
       if (boardstate[index + 1][sindex] === boardstate[zeroindex][zerosindex]) {
+        console.log("move right");
         moveright(index, sindex, zeroindex, zerosindex, value);
       }
     }
     if (index > 0) {
       if (board[index - 1][sindex] === board[zeroindex][zerosindex]) {
-        console.log("swap left zero ");
+        console.log("move left");
         moveleft(index, sindex, zeroindex, zerosindex, value);
       }
     }
