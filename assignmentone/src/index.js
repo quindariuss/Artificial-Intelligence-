@@ -14,11 +14,6 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-const numbercorrect = function (x) {
-  return 5;
-};
-
-var tree = [];
 function App() {
   function getH(boardarray) {
     var inplace = 0;
@@ -30,82 +25,6 @@ function App() {
       }
     }
     return inplace;
-  }
-  // Fake move functions
-  function movedownempty(index, sindex, zeroindex, zerosindex, value) {
-    var temp = [...boardstate[index]];
-    temp.splice(sindex, 1, 0);
-    temp.splice(sindex + 1, 1, value);
-    if (index === 0) {
-      var newboard = [temp, boardstate[1], boardstate[2]];
-      return getH(newboard);
-    }
-    if (index === 1) {
-      var newboard = [boardstate[0], temp, boardstate[2]];
-      return getH(newboard);
-    }
-    if (index === 2) {
-      var newboard = [boardstate[0], boardstate[1], temp];
-      return getH(newboard);
-    }
-  }
-  function moveupempty(index, sindex, zeroindex, zerosindex, value) {
-    var temp = [...boardstate[index]];
-    temp.splice(sindex, 1, 0);
-    temp.splice(sindex - 1, 1, value);
-    if (index === 0) {
-      return getH([temp, boardstate[1], boardstate[2]]);
-    }
-    if (index === 1) {
-      var newboard = [boardstate[0], temp, boardstate[2]];
-      return getH([boardstate[0], temp, boardstate[2]]);
-    }
-    if (index === 2) {
-      var newboard = [boardstate[0], boardstate[1], temp];
-      return getH([boardstate[0], boardstate[1], temp]);
-    }
-  }
-  function moverightempty(index, sindex, zeroindex, zerosindex, value) {
-    if (index === 1) {
-      var temp = [...boardstate];
-      var temprowzero = [temp[index].splice(sindex, 1, 0)];
-      var temprow = [temp[zeroindex].splice(zerosindex, 1, value)];
-      var temp1 = [temp.splice(index, 1, [temprowzero]).flat()];
-      var temp0 = [temp[0]];
-      var temp2 = [temp.splice(zeroindex, 1, [temprow]).flat()];
-      var newboard = [temp0, temp1, temp2];
-      return getH([temp0, temp1, temp2]);
-    } else if (index === 0) {
-      var temp = [...boardstate];
-      var temprowzero = [temp[index].splice(sindex, 1, 0)];
-      var temp0 = [temp.splice(index, 1, [temprowzero]).flat()];
-      var temprow = [temp[zeroindex].splice(zerosindex, 1, value)];
-      var temp2 = [temp[2]];
-      var temp1 = [temp.splice(zeroindex, 1, [temprow]).flat()];
-      var newboard = [temp0, temp1, temp2];
-      return getH([temp0, temp1, temp2]);
-    }
-  }
-  function moveleftempty(index, sindex, zeroindex, zerosindex, value) {
-    if (index === 2) {
-      var temp = [...boardstate];
-      var temprowzero = [temp[index][subindex].splice(sindex, 1, 0)];
-      var temprow = [temp[zeroindex].splice(zerosindex, 1, value)];
-      var temp1 = [temp[1]];
-      var temp0 = [temp[0]];
-      var temp2 = [temp.splice(index, 1, [temprow]).flat()];
-      var newboard = [temp0, temp1, temp2];
-      return getH([temp0, temp1, temp2]);
-    } else if (index === 1) {
-      var temp = [...boardstate];
-      var temprowzero = [temp[index].splice(sindex, 1, 0)];
-      var temprow = [temp[zeroindex].splice(zerosindex, 1, value)];
-      var temp2 = [temp[2]];
-      var temp0 = [temp.splice(zeroindex, 1, [temprowzero]).flat()];
-      var temp1 = [temp.splice(index, 1, [temprow]).flat()];
-      var newboard = [temp0, temp1, temp2];
-      return getH([temp0, temp1, temp2]);
-    }
   }
 
   const board = [
@@ -134,94 +53,6 @@ function App() {
   const [g, setg] = useState(0);
   const [h, seth] = useState([]);
   const [pressed, setpressed] = useState(false);
-
-  function AI(index, sindex, zeroindex, zerosubindex, value) {
-    console.log("Zero was at:" + zeroindex + ", " + zerosubindex);
-    if (zeroindex === 0 && zerosubindex === 0) {
-      console.log("I am top left");
-      console.log("I could've move in two directions");
-      console.log(
-        "My Correctness for move up is :" +
-          moveupempty(index, sindex, zeroindex, zerosubindex, value)
-      );
-      console.log(
-        "My Correctness for move left is :" +
-          moveleftempty(index, sindex, zeroindex, zerosubindex, value)
-      );
-    }
-    if (zeroindex === 0 && zerosubindex === 1) {
-      console.log("I am middle left");
-      console.log("I could've move in three directions");
-      console.log(
-        "My Correctness for move left is :" +
-          moveleftempty(index, sindex, zeroindex, zerosubindex, value)
-      );
-      console.log(
-        "My Correctness for move right is :" +
-          moverightempty(index, sindex, zeroindex, zerosubindex, value)
-      );
-    }
-    if (zeroindex === 0 && zerosubindex === 2) {
-      console.log("I am bottom left");
-      console.log("I could've move in two directions");
-    }
-    if (zeroindex === 1 && zerosubindex === 0) {
-      console.log("I am top middle");
-      console.log("I could've move in three directions");
-      console.log(
-        "My Correctness for move down is :" +
-          moveupempty(index, sindex, zeroindex, zerosubindex, value)
-      );
-      console.log(
-        "My Correctness for move left is :" +
-          moveleftempty(index, sindex, zeroindex, zerosubindex, value)
-      );
-      console.log(
-        "My Correctness for move right is :" +
-          moverightempty(index, sindex, zeroindex, zerosubindex, value)
-      );
-    }
-    if (zeroindex === 1 && zerosubindex === 1) {
-      console.log("I am middle middle");
-      console.log("I could've move in four directions");
-      console.log(
-        "My Correctness for move up is :" +
-          moveupempty(index, sindex, zeroindex, zerosubindex, value)
-      );
-      console.log(
-        "My Correctness for move down is :" +
-          movedownempty(index, sindex, zeroindex, zerosubindex, value)
-      );
-      console.log(
-        "My Correctness for move left is :" +
-          moveleftempty(index, sindex, zeroindex, zerosubindex, value)
-      );
-      console.log(
-        "My Correctness for move right is :" +
-          moverightempty(index, sindex, zeroindex, zerosubindex, value)
-      );
-    }
-    if (zeroindex === 1 && zerosubindex === 2) {
-      console.log("I am bottom middle");
-      console.log("I could've move in three directions");
-      console.log(
-        "My Correctness for move down is :" +
-          movedownempty(index, sindex, zeroindex, zerosubindex, value)
-      );
-    }
-    if (zeroindex === 2 && zerosubindex === 0) {
-      console.log("I am top right");
-      console.log("I could've move in two directions");
-    }
-    if (zeroindex === 2 && zerosubindex === 1) {
-      console.log("I am middle right");
-      console.log("I could've've move in three directions");
-    }
-    if (zeroindex === 2 && zerosubindex === 2) {
-      console.log("I am bottom right");
-      console.log("I could've move in two directions");
-    }
-  }
 
   useEffect(() => {
     if (boardstate === goalstate) {
@@ -253,7 +84,6 @@ function App() {
         }
       }
     }
-    AI(index, sindex, zeroindex, zerosindex, value);
 
     if (sindex < board.length - 1) {
       if (boardstate[index][sindex + 1] === boardstate[zeroindex][zerosindex]) {
@@ -361,7 +191,10 @@ function App() {
         8 Puzzle Game
       </Heading>
       <Center>
-        <Button textAlign="center"> Solve using A* Algorithm</Button>
+        <Button onClick={() => solve(boardstate)} textAlign="center">
+          {" "}
+          Solve using A* Algorithm
+        </Button>
       </Center>
       <Center p="20">
         <Box bg="blackAlpha.200" padding="10" borderRadius="10">
@@ -399,3 +232,400 @@ reactdom.render(
   </ChakraProvider>,
   document.getElementById("root")
 );
+
+function solve(board) {
+  var freshboard = [...board];
+  var won = false;
+  const goalboard = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 0],
+  ];
+  var count = 0;
+  var zeroindex = 0;
+  var zerosubindex = 0;
+  //finding initial zero
+  for (let i = 0; i < board.length; i++) {
+    for (let t = 0; t < board.length; t++) {
+      if (board[i][t] === 0) {
+        zeroindex = i;
+        zerosubindex = t;
+      }
+    }
+  }
+
+  function moveleft() {
+    for (let i = 0; i < board.length; i++) {
+      for (let t = 0; t < board.length; t++) {
+        if (board[i][t] === 0) {
+          zeroindex = i;
+          zerosubindex = t;
+        }
+      }
+    }
+    board[zeroindex][zerosubindex] = board[zeroindex][zerosubindex + 1];
+    board[zeroindex][zerosubindex + 1] = 0;
+    console.log("moved left");
+    return getcorrect();
+  }
+  function moveup() {
+    for (let i = 0; i < board.length; i++) {
+      for (let t = 0; t < board.length; t++) {
+        if (board[i][t] === 0) {
+          zeroindex = i;
+          zerosubindex = t;
+        }
+      }
+    }
+
+    board[zeroindex][zerosubindex] = board[zeroindex - 1][zerosubindex];
+
+    board[zeroindex - 1][zerosubindex] = 0;
+    console.log("moved up");
+    return getcorrect();
+  }
+  function moveright() {
+    for (let i = 0; i < board.length; i++) {
+      for (let t = 0; t < board.length; t++) {
+        if (board[i][t] === 0) {
+          zeroindex = i;
+          zerosubindex = t;
+        }
+      }
+    }
+
+    board[zeroindex][zerosubindex] = board[zeroindex][zerosubindex - 1];
+
+    board[zeroindex][zerosubindex - 1] = 0;
+    console.log("moved right");
+    return getcorrect();
+  }
+  function movedown() {
+    for (let i = 0; i < board.length; i++) {
+      for (let t = 0; t < board.length; t++) {
+        if (board[i][t] === 0) {
+          zeroindex = i;
+          zerosubindex = t;
+        }
+      }
+    }
+
+    board[zeroindex][zerosubindex] = board[zeroindex + 1][zerosubindex];
+
+    board[zeroindex + 1][zerosubindex] = 0;
+    console.log("moved down");
+    return getcorrect();
+  }
+  function getcorrect() {
+    var correct = 0;
+    for (let i = 0; i < board.length; i++) {
+      for (let t = 0; t < board.length; t++) {
+        if (board[i][t] === goalboard[i][t]) {
+          correct++;
+        }
+      }
+    }
+    return correct;
+  }
+  function printboard(aboard) {
+    console.log(aboard[0]);
+    console.log(aboard[1]);
+    console.log(aboard[2]);
+  }
+
+  function AI() {
+    count++;
+    console.log({ count });
+    console.log(getcorrect(board));
+    if (getcorrect() === 9) {
+      won = true;
+      printboard(board);
+      console.log("finished");
+    } else if (count >= 100) {
+      won = true;
+      console.log("Try again");
+    } else if (!won) {
+      for (let i = 0; i < board.length; i++) {
+        for (let t = 0; t < board.length; t++) {
+          if (board[i][t] === 0) {
+            zeroindex = i;
+            zerosubindex = t;
+          }
+        }
+      }
+      print("AI Iterations");
+      printboard(board);
+      if (zeroindex === 0 && zerosubindex === 0) {
+        var numz = [];
+        //test move left
+        moveleft();
+        numz.push(getcorrect());
+        moveright();
+        //test move down
+        movedown();
+        numz.push(getcorrect());
+        moveup();
+        //make a decison
+
+        numz = randomtie(numz);
+
+        var max = Math.max(...numz);
+
+        if (numz[0] === max) {
+          console.log("I should move down");
+          movedown();
+          AI();
+        } else if (numz[1] === max) {
+          console.log("I should move left");
+          moveleft();
+          AI();
+        } else {
+          print("got nothing");
+        }
+      } else if (zeroindex === 1 && zerosubindex === 0) {
+        var numz = [];
+        //test a move up
+        moveup();
+        numz.push(getcorrect());
+        movedown();
+        //test a move left
+        moveleft();
+        numz.push(getcorrect());
+        moveright();
+        //test a move down
+        movedown();
+        numz.push(getcorrect());
+        moveup();
+        numz = randomtie(numz);
+        print({ numz });
+        var max = Math.max(...numz);
+        if (numz[0] === max) {
+          console.log("I should move up");
+          moveup();
+          AI();
+        } else if (numz[1] === max) {
+          print("I should move left");
+          moveleft();
+          AI();
+        } else if (numz[2] === max) {
+          print("I should move down");
+          movedown();
+          AI();
+        } else {
+          print("got nothing");
+        }
+      } else if (zeroindex === 0 && zerosubindex === 1) {
+        var numz = [];
+        movedown();
+        numz.push(getcorrect());
+        moveup();
+        moveleft();
+        numz.push(getcorrect());
+        moveright();
+        moveleft();
+        numz.push(getcorrect());
+        moveright();
+
+        numz = randomtie(numz);
+        console.log({ numz });
+        var max = Math.max(...numz);
+        console.log({ max });
+        if (numz[0] === max) {
+          movedown();
+          AI();
+        } else if (numz[1] === max) {
+          moveleft();
+          AI();
+        } else if (numz[2] === max) {
+          moveright();
+          AI();
+        }
+      } else if (zeroindex === 0 && zerosubindex === 2) {
+        var numz = [];
+        //test right
+        moveright();
+        numz.push(getcorrect());
+        moveleft();
+        //test down
+        movedown();
+        numz.push(getcorrect());
+        moveup();
+        numz = randomtie(numz);
+        console.log({ numz });
+        var max = Math.max(...numz);
+        if (max === numz[0]) {
+          moveright();
+          AI();
+        } else if (max === numz[1]) {
+          movedown();
+          AI();
+        }
+      } else if (zeroindex === 1 && zerosubindex === 1) {
+        var numz = [];
+        //test a move up
+        moveup();
+        numz.push(getcorrect());
+        movedown();
+        //test a move down
+        movedown();
+        numz.push(getcorrect());
+        moveup();
+        //test a move left
+        moveleft();
+        numz.push(getcorrect());
+        moveright();
+        //test a move right
+        moveright();
+        numz.push(getcorrect());
+        moveleft();
+        numz = randomtie(numz);
+        console.log({ numz });
+        var max = Math.max(...numz);
+        if (max === numz[0]) {
+          moveup();
+          AI();
+        } else if (max === numz[1]) {
+          movedown();
+          AI();
+        } else if (max === numz[2]) {
+          moveleft();
+          AI();
+        } else if (max === numz[3]) {
+          moveright();
+          AI();
+        }
+      } else if (zeroindex === 2 && zerosubindex === 1) {
+        var numz = [];
+        //test a move up
+        moveup();
+        numz.push(getcorrect());
+        movedown();
+        //test a move left
+        moveleft();
+        numz.push(getcorrect());
+        moveright();
+        //test a move right
+        moveright();
+        numz.push(getcorrect());
+        moveleft();
+
+        numz = randomtie(numz);
+        console.log("Middle");
+        console.log({ numz });
+        var max = Math.max(...numz);
+
+        if (max === numz[0]) {
+          moveup();
+          AI();
+        } else if (max === numz[1]) {
+          moveleft();
+          AI();
+        } else if (max === numz[2]) {
+          moveright();
+          AI();
+        }
+      } else if (zeroindex === 2 && zerosubindex === 2) {
+        var numz = [];
+        //test a move up
+        moveup();
+        numz.push(getcorrect());
+        movedown();
+
+        //test a move right
+        moveright();
+        numz.push(getcorrect());
+        moveleft();
+        console.log("Corner");
+
+        numz = randomtie(numz);
+        console.log({ numz });
+        var max = Math.max(...numz);
+
+        if (max === numz[0]) {
+          moveup();
+          AI();
+        } else if (max === numz[1]) {
+          moveright();
+          AI();
+        }
+      } else if (zeroindex === 1 && zerosubindex === 2) {
+        var numz = [];
+        //test a move up
+        moveup();
+        numz.push(getcorrect());
+        movedown();
+        //test a move right
+        moveright();
+        numz.push(getcorrect());
+        moveleft();
+        //test a move down
+        movedown();
+        numz.push(getcorrect());
+        moveup();
+        console.log({ numz });
+        numz = randomtie(numz);
+        var max = Math.max(...numz);
+
+        if (max === numz[0]) {
+          moveup();
+          AI();
+        } else if (max === numz[1]) {
+          moveright();
+          AI();
+        } else if (max === numz[2]) {
+          movedown();
+          AI();
+        }
+      } else if (zeroindex === 2 && zerosubindex === 0) {
+        var numz = [];
+        //test a move up
+        moveup();
+        numz.push(getcorrect());
+        movedown();
+        //test a move right
+        moveright();
+        numz.push(getcorrect());
+        moveleft();
+
+        console.log({ numz });
+        numz = randomtie(numz);
+        var max = Math.max(...numz);
+
+        if (max === numz[0]) {
+          moveup();
+          AI();
+        } else if (max === numz[1]) {
+          moveright();
+          AI();
+        }
+      }
+    }
+  }
+  print("------------start------------");
+  AI();
+  printboard(freshboard);
+
+  function print(statement) {
+    console.log(statement);
+  }
+
+  function randomtie(numbers) {
+    console.log({ numbers });
+    var maxi = Math.max(...numbers);
+    var newnumbers = [];
+
+    if (
+      numbers.length === 2 &&
+      Math.max(...numbers) - Math.min(...numbers) < 3
+    ) {
+      newnumbers = numbers.map((x) => Math.floor(Math.random() * 1000));
+      return newnumbers;
+    } else {
+      newnumbers = numbers.map((x) =>
+        x === maxi ? x + Math.floor(Math.random() * 1000) : x
+      );
+      console.log({ newnumbers });
+      return newnumbers;
+    }
+  }
+}
