@@ -67,40 +67,217 @@ function App() {
   }
   function moverightempty(index, sindex, zeroindex, zerosindex, value) {
     if (index === 1) {
-      var temprowzero = [...boardstate[index].splice(sindex, 1, 0)];
-      var temprow = [...boardstate[zeroindex].splice(zerosindex, 1, value)];
-      var temp1 = [...boardstate.splice(index, 1, [temprowzero]).flat()];
-      var temp0 = [...boardstate[0]];
-      var temp2 = [...boardstate.splice(zeroindex, 1, [temprow]).flat()];
+      var temp = [...boardstate];
+      var temprowzero = [temp[index].splice(sindex, 1, 0)];
+      var temprow = [temp[zeroindex].splice(zerosindex, 1, value)];
+      var temp1 = [temp.splice(index, 1, [temprowzero]).flat()];
+      var temp0 = [temp[0]];
+      var temp2 = [temp.splice(zeroindex, 1, [temprow]).flat()];
       var newboard = [temp0, temp1, temp2];
       return getH([temp0, temp1, temp2]);
     } else if (index === 0) {
-      var temprowzero = [...boardstate[index].splice(sindex, 1, 0)];
-      var temp0 = [...boardstate.splice(index, 1, [temprowzero]).flat()];
-      var temprow = [...boardstate[zeroindex].splice(zerosindex, 1, value)];
-      var temp2 = [...boardstate[2]];
-      var temp1 = [...boardstate.splice(zeroindex, 1, [temprow]).flat()];
+      var temp = [...boardstate];
+      var temprowzero = [temp[index].splice(sindex, 1, 0)];
+      var temp0 = [temp.splice(index, 1, [temprowzero]).flat()];
+      var temprow = [temp[zeroindex].splice(zerosindex, 1, value)];
+      var temp2 = [temp[2]];
+      var temp1 = [temp.splice(zeroindex, 1, [temprow]).flat()];
       var newboard = [temp0, temp1, temp2];
       return getH([temp0, temp1, temp2]);
     }
   }
   function moveleftempty(index, sindex, zeroindex, zerosindex, value) {
     if (index === 2) {
-      var temprowzero = [...boardstate[index].splice(sindex, 1, 0)];
-      var temprow = [...boardstate[zeroindex].splice(zerosindex, 1, value)];
-      var temp1 = [...boardstate[1]];
-      var temp0 = [...boardstate[0]];
-      var temp2 = [...boardstate.splice(index, 1, [temprow]).flat()];
+      var temp = [...boardstate];
+      var temprowzero = [temp[index][subindex].splice(sindex, 1, 0)];
+      var temprow = [temp[zeroindex].splice(zerosindex, 1, value)];
+      var temp1 = [temp[1]];
+      var temp0 = [temp[0]];
+      var temp2 = [temp.splice(index, 1, [temprow]).flat()];
       var newboard = [temp0, temp1, temp2];
       return getH([temp0, temp1, temp2]);
     } else if (index === 1) {
-      var temprowzero = [...boardstate[index].splice(sindex, 1, 0)];
-      var temprow = [...boardstate[zeroindex].splice(zerosindex, 1, value)];
-      var temp2 = [...boardstate[2]];
-      var temp0 = [...boardstate.splice(zeroindex, 1, [temprowzero]).flat()];
-      var temp1 = [...boardstate.splice(index, 1, [temprow]).flat()];
+      var temp = [...boardstate];
+      var temprowzero = [temp[index].splice(sindex, 1, 0)];
+      var temprow = [temp[zeroindex].splice(zerosindex, 1, value)];
+      var temp2 = [temp[2]];
+      var temp0 = [temp.splice(zeroindex, 1, [temprowzero]).flat()];
+      var temp1 = [temp.splice(index, 1, [temprow]).flat()];
       var newboard = [temp0, temp1, temp2];
       return getH([temp0, temp1, temp2]);
+    }
+  }
+
+  const board = [
+    [1, 7, 8],
+    [3, 0, 4],
+    [6, 2, 5],
+  ];
+  const aiboard = [
+    [1, 7, 8],
+    [3, 0, 4],
+    [6, 2, 5],
+  ];
+  const goalstate = [
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+  ];
+
+  const [goal, setgoal] = useState(false);
+
+  const [boardstate, setboardstate] = useState(board);
+  const [aiboardstate, setaiboardstate] = useState(aiboard);
+  const [inputindex, setinputindex] = useState(0);
+  const [inputsubindex, setinputsubindex] = useState(0);
+  const [corrects, setcorrects] = useState([]);
+  const [g, setg] = useState(0);
+  const [h, seth] = useState([]);
+  const [pressed, setpressed] = useState(false);
+
+  function AI(index, sindex, zeroindex, zerosubindex, value) {
+    console.log("Zero was at:" + zeroindex + ", " + zerosubindex);
+    if (zeroindex === 0 && zerosubindex === 0) {
+      console.log("I am top left");
+      console.log("I could've move in two directions");
+      console.log(
+        "My Correctness for move up is :" +
+          moveupempty(index, sindex, zeroindex, zerosubindex, value)
+      );
+      console.log(
+        "My Correctness for move left is :" +
+          moveleftempty(index, sindex, zeroindex, zerosubindex, value)
+      );
+    }
+    if (zeroindex === 0 && zerosubindex === 1) {
+      console.log("I am middle left");
+      console.log("I could've move in three directions");
+      console.log(
+        "My Correctness for move left is :" +
+          moveleftempty(index, sindex, zeroindex, zerosubindex, value)
+      );
+      console.log(
+        "My Correctness for move right is :" +
+          moverightempty(index, sindex, zeroindex, zerosubindex, value)
+      );
+    }
+    if (zeroindex === 0 && zerosubindex === 2) {
+      console.log("I am bottom left");
+      console.log("I could've move in two directions");
+    }
+    if (zeroindex === 1 && zerosubindex === 0) {
+      console.log("I am top middle");
+      console.log("I could've move in three directions");
+      console.log(
+        "My Correctness for move down is :" +
+          moveupempty(index, sindex, zeroindex, zerosubindex, value)
+      );
+      console.log(
+        "My Correctness for move left is :" +
+          moveleftempty(index, sindex, zeroindex, zerosubindex, value)
+      );
+      console.log(
+        "My Correctness for move right is :" +
+          moverightempty(index, sindex, zeroindex, zerosubindex, value)
+      );
+    }
+    if (zeroindex === 1 && zerosubindex === 1) {
+      console.log("I am middle middle");
+      console.log("I could've move in four directions");
+      console.log(
+        "My Correctness for move up is :" +
+          moveupempty(index, sindex, zeroindex, zerosubindex, value)
+      );
+      console.log(
+        "My Correctness for move down is :" +
+          movedownempty(index, sindex, zeroindex, zerosubindex, value)
+      );
+      console.log(
+        "My Correctness for move left is :" +
+          moveleftempty(index, sindex, zeroindex, zerosubindex, value)
+      );
+      console.log(
+        "My Correctness for move right is :" +
+          moverightempty(index, sindex, zeroindex, zerosubindex, value)
+      );
+    }
+    if (zeroindex === 1 && zerosubindex === 2) {
+      console.log("I am bottom middle");
+      console.log("I could've move in three directions");
+      console.log(
+        "My Correctness for move down is :" +
+          movedownempty(index, sindex, zeroindex, zerosubindex, value)
+      );
+    }
+    if (zeroindex === 2 && zerosubindex === 0) {
+      console.log("I am top right");
+      console.log("I could've move in two directions");
+    }
+    if (zeroindex === 2 && zerosubindex === 1) {
+      console.log("I am middle right");
+      console.log("I could've've move in three directions");
+    }
+    if (zeroindex === 2 && zerosubindex === 2) {
+      console.log("I am bottom right");
+      console.log("I could've move in two directions");
+    }
+  }
+
+  useEffect(() => {
+    if (boardstate === goalstate) {
+      setgoal(true);
+    }
+    for (let i = 0; i < boardstate.length; i++) {
+      for (let t = 0; t < boardstate.length; t++) {
+        if (boardstate[i][t] === goalstate[i][t]) {
+          seth(h.splice(h.length, 0, boardstate[i][t]));
+        } else {
+        }
+      }
+    }
+
+    setcorrects(h.flat());
+  }, [pressed]);
+  function handleClick(index, sindex) {
+    console.log({ index }, { sindex });
+    setpressed(!pressed);
+    var zeroindex = 0;
+    var zerosindex = 0;
+    var value = boardstate[index][sindex];
+
+    for (let i = 0; i < boardstate.length; i++) {
+      for (let t = 0; t < boardstate.length; t++) {
+        if (boardstate[i][t] === 0) {
+          zeroindex = i;
+          zerosindex = t;
+        }
+      }
+    }
+    AI(index, sindex, zeroindex, zerosindex, value);
+
+    if (sindex < board.length - 1) {
+      if (boardstate[index][sindex + 1] === boardstate[zeroindex][zerosindex]) {
+        console.log("move down");
+        movedown(index, sindex, zeroindex, zerosindex, value);
+      }
+    }
+    if (sindex > 0) {
+      if (boardstate[index][sindex - 1] === boardstate[zeroindex][zerosindex]) {
+        console.log("move up");
+        moveup(index, sindex, zeroindex, zerosindex, value);
+      }
+    }
+    if (index < board.length - 1) {
+      if (boardstate[index + 1][sindex] === boardstate[zeroindex][zerosindex]) {
+        console.log("move right");
+        moveright(index, sindex, zeroindex, zerosindex, value);
+      }
+    }
+    if (index > 0) {
+      if (board[index - 1][sindex] === board[zeroindex][zerosindex]) {
+        console.log("move left");
+        moveleft(index, sindex, zeroindex, zerosindex, value);
+      }
     }
   }
 
@@ -175,159 +352,6 @@ function App() {
       var temp1 = boardstate.splice(index, 1, [temprow]).flat();
       var newboard = [temp0, temp1, temp2];
       setboardstate([temp0, temp1, temp2]);
-    }
-  }
-
-  const board = [
-    [1, 7, 8],
-    [3, 0, 4],
-    [6, 2, 5],
-  ];
-  const aiboard = [
-    [1, 7, 8],
-    [3, 0, 4],
-    [6, 2, 5],
-  ];
-  const goalstate = [
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-  ];
-
-  const [goal, setgoal] = useState(false);
-
-  const [boardstate, setboardstate] = useState(board);
-  const [aiboardstate, setaiboardstate] = useState(aiboard);
-  const [inputindex, setinputindex] = useState(0);
-  const [inputsubindex, setinputsubindex] = useState(0);
-  const [corrects, setcorrects] = useState([]);
-  const [g, setg] = useState(0);
-  const [h, seth] = useState([]);
-  const [pressed, setpressed] = useState(false);
-
-  function AI(index, sindex, zeroindex, zerosubindex, value) {
-    console.log("Zero was at:" + zeroindex + ", " + zerosubindex);
-    if (zeroindex === 0 && zerosubindex === 0) {
-      console.log("I am top left");
-      console.log("I could've move in two directions");
-    }
-    if (zeroindex === 0 && zerosubindex === 1) {
-      console.log("I am middle left");
-      console.log("I could've move in three directions");
-    }
-    if (zeroindex === 0 && zerosubindex === 2) {
-      console.log("I am bottom left");
-      console.log("I could've move in two directions");
-    }
-    if (zeroindex === 1 && zerosubindex === 0) {
-      console.log("I am top middle");
-      console.log("I could've move in three directions");
-      console.log(
-        "My Correctness for move down is :" +
-          movedownempty(index, sindex, zeroindex, zerosubindex, value)
-      );
-    }
-    if (zeroindex === 1 && zerosubindex === 1) {
-      console.log("I am middle middle");
-      console.log("I could've move in four directions");
-      console.log(
-        "My Correctness for move up is :" +
-          moveupempty(index, sindex, zeroindex, zerosubindex, value)
-      );
-      console.log(
-        "My Correctness for move up is :" +
-          movedownempty(index, sindex, zeroindex, zerosubindex, value)
-      );
-      console.log(
-        "My Correctness for move left is :" +
-          moveleftempty(index, sindex, zeroindex, zerosubindex, value)
-      );
-    }
-    if (zeroindex === 1 && zerosubindex === 2) {
-      console.log("I am bottom middle");
-      console.log("I could've move in three directions");
-      console.log(
-        "My Correctness for move down is :" +
-          movedownempty(index, sindex, zeroindex, zerosubindex, value)
-      );
-    }
-    if (zeroindex === 2 && zerosubindex === 0) {
-      console.log("I am top right");
-      console.log("I could've move in two directions");
-    }
-    if (zeroindex === 2 && zerosubindex === 1) {
-      console.log("I am middle right");
-      console.log("I could've've move in three directions");
-    }
-    if (zeroindex === 2 && zerosubindex === 2) {
-      console.log("I am bottom right");
-      console.log("I could've move in two directions");
-    }
-  }
-
-  useEffect(() => {
-    if (boardstate === goalstate) {
-      setgoal(true);
-    }
-    for (let i = 0; i < boardstate.length; i++) {
-      for (let t = 0; t < boardstate.length; t++) {
-        if (boardstate[i][t] === goalstate[i][t]) {
-          seth(h.splice(h.length, 0, boardstate[i][t]));
-        } else {
-        }
-      }
-    }
-
-    setcorrects(h.flat());
-  }, [pressed]);
-  function handleClick(index, sindex) {
-    console.log({ index }, { sindex });
-    setpressed(!pressed);
-    var zeroindex = 0;
-    var zerosindex = 0;
-    var value = boardstate[index][sindex];
-
-    for (let i = 0; i < boardstate.length; i++) {
-      for (let t = 0; t < boardstate.length; t++) {
-        if (boardstate[i][t] === 0) {
-          zeroindex = i;
-          zerosindex = t;
-        }
-      }
-    }
-    if (index === zeroindex && sindex === zerosindex) {
-      AI(index, sindex, zeroindex, zerosindex, value);
-    } else {
-      if (sindex < board.length - 1) {
-        if (
-          boardstate[index][sindex + 1] === boardstate[zeroindex][zerosindex]
-        ) {
-          console.log("move down");
-          movedown(index, sindex, zeroindex, zerosindex, value);
-        }
-      }
-      if (sindex > 0) {
-        if (
-          boardstate[index][sindex - 1] === boardstate[zeroindex][zerosindex]
-        ) {
-          console.log("move up");
-          moveup(index, sindex, zeroindex, zerosindex, value);
-        }
-      }
-      if (index < board.length - 1) {
-        if (
-          boardstate[index + 1][sindex] === boardstate[zeroindex][zerosindex]
-        ) {
-          console.log("move right");
-          moveright(index, sindex, zeroindex, zerosindex, value);
-        }
-      }
-      if (index > 0) {
-        if (board[index - 1][sindex] === board[zeroindex][zerosindex]) {
-          console.log("move left");
-          moveleft(index, sindex, zeroindex, zerosindex, value);
-        }
-      }
     }
   }
 

@@ -1,0 +1,17 @@
+function moveright() {
+    for (let i = 0; i < board.length; i++) {
+        for (let t = 0; t < board.length; t++) {
+            if (board[i][t] === 0) {
+                console.log({ i }, { t });
+                zeroindex = i;
+                zerosubindex = t;
+            }
+        }
+    }
+
+    board[zeroindex][zerosubindex] = board[zeroindex][zerosubindex - 1];
+
+    board[zeroindex][zerosubindex - 1] = 0;
+    console.log("moved right");
+    return getcorrect();
+}
