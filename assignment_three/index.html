@@ -1,18 +1,21 @@
-<h1>Image Changer!</h1>
-<input type="file" accept="image/*" id="fileinput" />
-<div>
-  <label for="red">Red</label>
-  <input type="range" min="-255" max="255" value="0" id="red" />
-  <label for="green">green</label>
-  <input type="range" min="-255" max="255" value="0" id="green" />
-  <label for="blue">blue</label>
-  <input type="range" min="-255" max="255" value="0" id="blue" />
-  <label for="brightness">brightness</label>
-  <input type="range" min="-255" max="255" value="0" id="brightness" />
-  <label for="contrast">contrast</label>
-  <input type="range" min="-255" max="255" value="0" id="contrast" />
-  <label for="grayscale">grayscale</label>
-  <input type="checkbox" id="grayscale" />
-  <br />
-  <canvas id="canvas" width="0" height="0"></canvas>
-</div>
+<body>
+  <h1>Image Changer!</h1>
+  <input type="file" accept="image/*" id="fileinput" />
+  <div>
+    <label for="red">Red</label>
+    <input type="range" min="-255" max="255" value="0" id="red" />
+    <label for="green">green</label>
+    <input type="range" min="-255" max="255" value="0" id="green" />
+    <label for="blue">blue</label>
+    <input type="range" min="-255" max="255" value="0" id="blue" />
+    <label for="brightness">brightness</label>
+    <input type="range" min="-255" max="255" value="0" id="brightness" />
+    <label for="contrast">contrast</label>
+    <input type="range" min="-255" max="255" value="0" id="contrast" />
+    <label for="grayscale">grayscale</label>
+    <input type="checkbox" id="grayscale" />
+    <br />
+    <canvas id="canvas" width="0" height="0"></canvas>
+  </div>
+  <script src="index.js"></script>
+</body>
