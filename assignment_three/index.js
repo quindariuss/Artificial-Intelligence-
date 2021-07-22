@@ -1,7 +1,6 @@
 const fileinput = document.getElementById("fileinput");
 const canvas = document.getElementById("canvas");
 const contex = canvas.getContext("2d");
-const source_image = new Image();
 const red_slider = document.getElementById("red");
 const green_slider = document.getElementById("green");
 const blue_slider = document.getElementById("blue");
@@ -9,9 +8,17 @@ const brightness_slider = document.getElementById("brightness");
 const grayscale_checkbox = document.getElementById("grayscale");
 const contrast_slider = document.getElementById("contrast");
 
+const source_image = new Image();
 let image_data = null;
 let orginal_pixels = null;
 let current_pixels = null;
+
+red_slider.onchange = run_filter;
+green_slider.onchange = run_filter;
+blue_slider.onchange = run_filter;
+brightness_slider.onchange = run_filter;
+grayscale_checkbox.onchange = run_filter;
+contrast_slider.onchange = run_filter;
 
 fileinput.onchange = function (e) {
   if (e.target.files && e.target.files.item(0)) {
@@ -33,21 +40,17 @@ source_image.onload = function () {
   orginal_pixels = image_data.data.slice();
 };
 
-red_slider.onchange = run_filter();
-green_slider.onchange = run_filter();
-blue_slider.onchange = run_filter();
-brightness_slider.onchange = run_filter();
-grayscale_checkbox.onchange = run_filter();
-contrast_slider.onchange = run_filter();
-
 function get_index(x, y) {
   return (x + y * source_image.width) * 4;
 }
 
 function commit() {
-  for (let index = 0; index < image_data.length; index++) {
-    image_data.data[index] = current_pixels[index];
+  // Copy over the current pixel changes to the image
+  for (let i = 0; i < image_data.data.length; i++) {
+    image_data.data[i] = current_pixels[i];
   }
+
+  // Update the 2d rendering canvas with the image we just updated so the user can see
   contex.putImageData(
     image_data,
     0,
@@ -58,6 +61,7 @@ function commit() {
     source_image.height
   );
 }
+
 function run_filter() {
   console.log("running filter");
   current_pixels = orginal_pixels.slice();
@@ -77,9 +81,9 @@ function run_filter() {
       // add contrast
 
       if (!grayscale_filter) {
-        console.log("trying to add blue");
-        // add red
-        // add green
+        add_blue(subindex, index, blue_filter);
+        add_red(subindex, index, red_filter);
+        add_green(subindex, index, green_filter);
       }
     }
   }
@@ -88,14 +92,25 @@ function run_filter() {
 
 const red_offset = 0;
 const green_offset = 1;
-const blue_offset = 2;
+const BLUE_OFFSET = 2;
 
 function add_blue(x, y, value) {
-  const index = get_index(x, y) + blue_offset;
-  const current_value = current_pixels[index];
-  current_pixels[index] = clamp(current_value + value);
+  const index = get_index(x, y) + BLUE_OFFSET;
+  const currentValue = current_pixels[index];
+  current_pixels[index] = clamp(currentValue + value);
 }
 
 function clamp(value) {
   return Math.max(0, Math.min(Math.floor(value), 255));
+}
+
+function add_red(x, y, value) {
+  const index = get_index(x, y) + red_offset;
+  const current_value = current_pixels[index];
+  current_pixels[index] = clamp(current_value + value);
+}
+function add_green(x, y, value) {
+  const index = get_index(x, y) + green_offset;
+  const current_value = current_pixels[index];
+  current_pixels[index] = clamp(current_value + value);
 }
