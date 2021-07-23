@@ -60,6 +60,7 @@ function commit() {
     source_image.width,
     source_image.height
   );
+  console.log({ orginal_pixels });
 }
 
 function run_filter() {
