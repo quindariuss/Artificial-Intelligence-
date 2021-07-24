@@ -1,11 +1,25 @@
-var numbers = [];
-
-for (index = 0; index < 10_000; index++) {
-  numbers += index;
-}
+var numbers = [...Array(10_000).keys()];
 
 console.log({ numbers });
 
-for (column = 0; column < 100; column++) {
-  for (row = 0; row < 100; row++) {}
+var rgb = [];
+
+for (index = 0; index < numbers.length / 4; index += 4) {
+  rgb.push({
+    red: numbers[index],
+    blue: numbers[index + 1],
+    green: numbers[index + 2],
+    contrast: numbers[index + 3],
+  });
 }
+
+var screen = [[], []];
+
+for (index = 0; index < rgb.length / 2; index++) {
+  for (subindex = 0; subindex < rgb.length / 2; subindex++) {
+    screen[0].push(rgb[0]);
+    rgb.shift();
+  }
+}
+
+console.log({ screen });

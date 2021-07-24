@@ -60,7 +60,7 @@ function commit() {
     source_image.width,
     source_image.height
   );
-  console.log({ orginal_pixels });
+  console.log({ image_data });
 }
 
 function run_filter() {
@@ -115,3 +115,35 @@ function add_green(x, y, value) {
   const current_value = current_pixels[index];
   current_pixels[index] = clamp(current_value + value);
 }
+
+var numbers = [...Array(10_000).keys()];
+
+console.log({ numbers });
+
+var rgb = [];
+
+for (index = 0; index < numbers.length / 4; index += 4) {
+  rgb.push({
+    red: numbers[index],
+    blue: numbers[index + 1],
+    green: numbers[index + 2],
+    contrast: numbers[index + 3],
+  });
+}
+
+var scrren = new Array(25);
+for (index = 0; index < 25; index++) {
+  scrren[index] = new Array(25);
+  for (subindex = 0; subindex < 25; subindex++) {
+    scrren[index][subindex] = rgb[0];
+    rgb.shift();
+  }
+}
+
+console.log({ scrren });
+
+var imgdata = new Uint8ClampedArray(100);
+
+imgdata[0] = 1;
+
+console.log({ imgdata });
