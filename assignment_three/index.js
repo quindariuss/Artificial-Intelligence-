@@ -147,4 +147,5 @@ var imgdata = new Uint8ClampedArray(100);
 imgdata[0] = 1;
 
 console.log({ imgdata });
-console.log(scrren[3][0]);
+scrren[3][0].red = 1;
+console.log(scrren[3][0].blue);
