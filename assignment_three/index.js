@@ -122,7 +122,7 @@ console.log({ numbers });
 
 var rgb = [];
 
-for (index = 0; index < numbers.length / 4; index += 4) {
+for (index = 0; index < 10000; index += 4) {
   rgb.push({
     red: numbers[index],
     blue: numbers[index + 1],
@@ -130,6 +130,8 @@ for (index = 0; index < numbers.length / 4; index += 4) {
     contrast: numbers[index + 3],
   });
 }
+
+console.log(rgb.length);
 
 var scrren = new Array(25);
 for (index = 0; index < 25; index++) {
@@ -139,13 +141,22 @@ for (index = 0; index < 25; index++) {
     rgb.shift();
   }
 }
+var imgdata = new Uint8ClampedArray(10000);
 
+imgdata[0] = scrren[0][0].red;
+imgdata[1] = scrren[0][0].blue;
+imgdata[2] = scrren[0][0].green;
+imgdata[3] = scrren[0][0].contrast;
+
+// for (index = 0; index < 25; index++) {
+//   for (subindex = 0; subindex < 25; subindex++) {
+//     console.log(scrren[index][subindex]);
+//   }
+// }
 console.log({ scrren });
-
-var imgdata = new Uint8ClampedArray(100);
-
-imgdata[0] = 1;
 
 console.log({ imgdata });
 scrren[3][0].red = 1;
 console.log(scrren[3][0].blue);
+
+console.log({ imgdata });
