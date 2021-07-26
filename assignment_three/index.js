@@ -131,8 +131,6 @@ for (index = 0; index < 10000; index += 4) {
   });
 }
 
-console.log(rgb.length);
-
 var scrren = new Array(25);
 for (index = 0; index < 25; index++) {
   scrren[index] = new Array(25);
@@ -148,11 +146,19 @@ imgdata[1] = scrren[0][0].blue;
 imgdata[2] = scrren[0][0].green;
 imgdata[3] = scrren[0][0].contrast;
 
-// for (index = 0; index < 25; index++) {
-//   for (subindex = 0; subindex < 25; subindex++) {
-//     console.log(scrren[index][subindex]);
-//   }
-// }
+var count = 0;
+for (index = 0; index < 25; index++) {
+  for (subindex = 0; subindex < 25; subindex++) {
+    imgdata[count] = scrren[index][subindex].red;
+    count++;
+    imgdata[count] = scrren[index][subindex].blue;
+    count++;
+    imgdata[count] = scrren[index][subindex].green;
+    count++;
+    imgdata[count] = scrren[index][subindex].contrast;
+    count++;
+  }
+}
 console.log({ scrren });
 
 console.log({ imgdata });
