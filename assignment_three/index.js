@@ -205,8 +205,8 @@ function change_to_screen() {
 
 function get_average_image() {
   console.log({ image_screen });
-  for (index = 1; index < source_image.width - 1; index++) {
-    for (subindex = 1; subindex < source_image.height; subindex++) {
+  for (index = 1; index < source_image.width - 2; index++) {
+    for (subindex = 1; subindex < source_image.height - 2; subindex++) {
       var red =
         (image_screen[index - 1][subindex - 1].red +
           image_screen[index][subindex - 1].red +
@@ -218,131 +218,36 @@ function get_average_image() {
           image_screen[index + 1][subindex + 1].red) /
         8;
       var green =
-        (image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
-          subindex - 1
-        ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
-          index + 1
-        ][subindex][index + 1][subindex + 1].green +
-          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
-            subindex - 1
-          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
-            index + 1
-          ][subindex][index + 1][subindex + 1].green +
-          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
-            subindex - 1
-          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
-            index + 1
-          ][subindex][index + 1][subindex + 1].green +
-          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
-            subindex - 1
-          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
-            index + 1
-          ][subindex][index + 1][subindex + 1].green +
-          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
-            subindex - 1
-          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
-            index + 1
-          ][subindex][index + 1][subindex + 1].green +
-          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
-            subindex - 1
-          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
-            index + 1
-          ][subindex][index + 1][subindex + 1].green +
-          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
-            subindex - 1
-          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
-            index + 1
-          ][subindex][index + 1][subindex + 1].green +
-          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
-            subindex - 1
-          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
-            index + 1
-          ][subindex][index + 1][subindex + 1].green) /
+        (image_screen[index - 1][subindex - 1].green +
+          image_screen[index][subindex - 1].green +
+          image_screen[index + 1][subindex - 1].green +
+          image_screen[index - 1][subindex].green +
+          image_screen[index - 1][subindex + 1].green +
+          image_screen[index][subindex + 1].green +
+          image_screen[index + 1][subindex].green +
+          image_screen[index + 1][subindex + 1].green) /
         8;
       var blue =
-        (image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
-          subindex - 1
-        ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
-          index + 1
-        ][subindex][index + 1][subindex + 1].blue +
-          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
-            subindex - 1
-          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
-            index + 1
-          ][subindex][index + 1][subindex + 1].blue +
-          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
-            subindex - 1
-          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
-            index + 1
-          ][subindex][index + 1][subindex + 1].blue +
-          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
-            subindex - 1
-          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
-            index + 1
-          ][subindex][index + 1][subindex + 1].blue +
-          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
-            subindex - 1
-          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
-            index + 1
-          ][subindex][index + 1][subindex + 1].blue +
-          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
-            subindex - 1
-          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
-            index + 1
-          ][subindex][index + 1][subindex + 1].blue +
-          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
-            subindex - 1
-          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
-            index + 1
-          ][subindex][index + 1][subindex + 1].blue +
-          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
-            subindex - 1
-          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
-            index + 1
-          ][subindex][index + 1][subindex + 1].blue) /
+        (image_screen[index - 1][subindex - 1].blue +
+          image_screen[index][subindex - 1].blue +
+          image_screen[index + 1][subindex - 1].blue +
+          image_screen[index - 1][subindex].blue +
+          image_screen[index - 1][subindex + 1].blue +
+          image_screen[index][subindex + 1].blue +
+          image_screen[index + 1][subindex].blue +
+          image_screen[index + 1][subindex + 1].blue) /
         8;
       var contrast =
-        (image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
-          subindex - 1
-        ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
-          index + 1
-        ][subindex][index + 1][subindex + 1].contrast +
-          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
-            subindex - 1
-          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
-            index + 1
-          ][subindex][index + 1][subindex + 1].contrast +
-          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
-            subindex - 1
-          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
-            index + 1
-          ][subindex][index + 1][subindex + 1].contrast +
-          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
-            subindex - 1
-          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
-            index + 1
-          ][subindex][index + 1][subindex + 1].contrast +
-          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
-            subindex - 1
-          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
-            index + 1
-          ][subindex][index + 1][subindex + 1].contrast +
-          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
-            subindex - 1
-          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
-            index + 1
-          ][subindex][index + 1][subindex + 1].contrast +
-          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
-            subindex - 1
-          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
-            index + 1
-          ][subindex][index + 1][subindex + 1].contrast +
-          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
-            subindex - 1
-          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
-            index + 1
-          ][subindex][index + 1][subindex + 1].contrast) /
+        (image_screen[index - 1][subindex - 1].contrast +
+          image_screen[index][subindex - 1].contrast +
+          image_screen[index + 1][subindex - 1].contrast +
+          image_screen[index - 1][subindex].contrast +
+          image_screen[index - 1][subindex + 1].contrast +
+          image_screen[index][subindex + 1].contrast +
+          image_screen[index + 1][subindex].contrast +
+          image_screen[index + 1][subindex + 1].contrast) /
         8;
+
       image_screen[index][subindex] = {
         red: red,
         green: green,
