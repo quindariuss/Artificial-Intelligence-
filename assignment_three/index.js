@@ -10,6 +10,7 @@ const contrast_slider = document.getElementById("contrast");
 
 const source_image = new Image();
 let image_data = null;
+let image_data_copy = null;
 let orginal_pixels = null;
 let current_pixels = null;
 
@@ -37,6 +38,7 @@ source_image.onload = function () {
     source_image.width,
     source_image.height
   );
+  image_data_copy = image_data.data.slice();
   orginal_pixels = image_data.data.slice();
 };
 
@@ -159,10 +161,28 @@ for (index = 0; index < 25; index++) {
     count++;
   }
 }
-console.log({ scrren });
+var screen_average = new Array(25);
 
+console.log({ scrren });
 console.log({ imgdata });
 scrren[3][0].red = 1;
 console.log(scrren[3][0].blue);
-
 console.log({ imgdata });
+
+function checkImageDate() {
+  console.log(image_data.data);
+}
+
+function change_to_object() {
+  var object = [];
+
+  for (index = 0; index < image_data_copy.length; index += 4) {
+    object.push({
+      red: image_data_copy[index],
+      green: image_data_copy[index + 1],
+      blue: image_data_copy[index + 2],
+      contrast: image_data_copy[index + 3],
+    });
+  }
+  console.log({ object });
+}
