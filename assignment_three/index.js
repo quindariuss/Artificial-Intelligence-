@@ -49,12 +49,10 @@ function get_index(x, y) {
 }
 
 function commit() {
-  // Copy over the current pixel changes to the image
   for (let i = 0; i < image_data.data.length; i++) {
     image_data.data[i] = current_pixels[i];
   }
 
-  // Update the 2d rendering canvas with the image we just updated so the user can see
   contex.putImageData(
     image_data,
     0,
@@ -64,7 +62,17 @@ function commit() {
     source_image.width,
     source_image.height
   );
-  console.log({ image_data });
+}
+function commit_2() {
+  contex.putImageData(
+    image_data,
+    0,
+    0,
+    0,
+    0,
+    source_image.width,
+    source_image.height
+  );
 }
 
 function run_filter() {
@@ -143,7 +151,8 @@ for (index = 0; index < 25; index++) {
     rgb.shift();
   }
 }
-var imgdata = new Uint8ClampedArray(10000);
+
+var imgdata = new Uint8ClampedArray(source_image.width * source_image.height);
 
 imgdata[0] = scrren[0][0].red;
 imgdata[1] = scrren[0][0].blue;
@@ -257,4 +266,26 @@ function get_average_image() {
     }
   }
   console.log({ image_screen });
+}
+
+function get_new_image_data() {
+  var image_data = new Uint8ClampedArray(
+    source_image.width * source_image.height
+  );
+
+  var count = 0;
+  for (index = 0; index < source_image.width; index++) {
+    for (subindex = 0; subindex < source_image.height; subindex++) {
+      image_data[count] = image_screen[index][subindex].red;
+      count++;
+      image_data[count] = image_screen[index][subindex].green;
+      count++;
+      image_data[count] = image_screen[index][subindex].blue;
+      count++;
+      image_data[count] = image_screen[index][subindex].contrast;
+      count++;
+    }
+  }
+  console.log({ image_data });
+  commit_2();
 }
