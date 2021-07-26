@@ -14,6 +14,7 @@ let image_data_copy = null;
 let orginal_pixels = null;
 let orginal_pixels_copy = null;
 let current_pixels = null;
+let current_pixels_copy = null;
 
 red_slider.onchange = run_filter;
 green_slider.onchange = run_filter;
@@ -203,45 +204,152 @@ function change_to_screen() {
 }
 
 function get_average_image() {
-  var red =
-    (image_screen[0][0].red +
-      image_screen[1][0].red +
-      image_screen[2][0].red +
-      image_screen[0][1].red +
-      image_screen[0][2].red +
-      image_screen[1][2].red +
-      image_screen[2][1].red +
-      image_screen[2][2].red) /
-    8;
-  var green =
-    (image_screen[0][0].green +
-      image_screen[1][0].green +
-      image_screen[2][0].green +
-      image_screen[0][1].green +
-      image_screen[0][2].green +
-      image_screen[1][2].green +
-      image_screen[2][1].green +
-      image_screen[2][2].green) /
-    8;
-  var blue =
-    (image_screen[0][0].blue +
-      image_screen[1][0].blue +
-      image_screen[2][0].blue +
-      image_screen[0][1].blue +
-      image_screen[0][2].blue +
-      image_screen[1][2].blue +
-      image_screen[2][1].blue +
-      image_screen[2][2].blue) /
-    8;
-  var contrast =
-    (image_screen[0][0].contrast +
-      image_screen[1][0].contrast +
-      image_screen[2][0].contrast +
-      image_screen[0][1].contrast +
-      image_screen[0][2].contrast +
-      image_screen[1][2].contrast +
-      image_screen[2][1].contrast +
-      image_screen[2][2].contrast) /
-    8;
-  console.log({ red }, { green }, { blue }, { contrast });
+  console.log({ image_screen });
+  for (index = 1; index < source_image.width - 1; index++) {
+    for (subindex = 1; subindex < source_image.height; subindex++) {
+      var red =
+        (image_screen[index - 1][subindex - 1].red +
+          image_screen[index][subindex - 1].red +
+          image_screen[index + 1][subindex - 1].red +
+          image_screen[index - 1][subindex].red +
+          image_screen[index - 1][subindex + 1].red +
+          image_screen[index][subindex + 1].red +
+          image_screen[index + 1][subindex].red +
+          image_screen[index + 1][subindex + 1].red) /
+        8;
+      var green =
+        (image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
+          subindex - 1
+        ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
+          index + 1
+        ][subindex][index + 1][subindex + 1].green +
+          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
+            subindex - 1
+          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
+            index + 1
+          ][subindex][index + 1][subindex + 1].green +
+          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
+            subindex - 1
+          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
+            index + 1
+          ][subindex][index + 1][subindex + 1].green +
+          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
+            subindex - 1
+          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
+            index + 1
+          ][subindex][index + 1][subindex + 1].green +
+          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
+            subindex - 1
+          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
+            index + 1
+          ][subindex][index + 1][subindex + 1].green +
+          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
+            subindex - 1
+          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
+            index + 1
+          ][subindex][index + 1][subindex + 1].green +
+          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
+            subindex - 1
+          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
+            index + 1
+          ][subindex][index + 1][subindex + 1].green +
+          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
+            subindex - 1
+          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
+            index + 1
+          ][subindex][index + 1][subindex + 1].green) /
+        8;
+      var blue =
+        (image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
+          subindex - 1
+        ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
+          index + 1
+        ][subindex][index + 1][subindex + 1].blue +
+          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
+            subindex - 1
+          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
+            index + 1
+          ][subindex][index + 1][subindex + 1].blue +
+          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
+            subindex - 1
+          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
+            index + 1
+          ][subindex][index + 1][subindex + 1].blue +
+          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
+            subindex - 1
+          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
+            index + 1
+          ][subindex][index + 1][subindex + 1].blue +
+          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
+            subindex - 1
+          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
+            index + 1
+          ][subindex][index + 1][subindex + 1].blue +
+          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
+            subindex - 1
+          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
+            index + 1
+          ][subindex][index + 1][subindex + 1].blue +
+          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
+            subindex - 1
+          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
+            index + 1
+          ][subindex][index + 1][subindex + 1].blue +
+          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
+            subindex - 1
+          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
+            index + 1
+          ][subindex][index + 1][subindex + 1].blue) /
+        8;
+      var contrast =
+        (image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
+          subindex - 1
+        ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
+          index + 1
+        ][subindex][index + 1][subindex + 1].contrast +
+          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
+            subindex - 1
+          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
+            index + 1
+          ][subindex][index + 1][subindex + 1].contrast +
+          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
+            subindex - 1
+          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
+            index + 1
+          ][subindex][index + 1][subindex + 1].contrast +
+          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
+            subindex - 1
+          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
+            index + 1
+          ][subindex][index + 1][subindex + 1].contrast +
+          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
+            subindex - 1
+          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
+            index + 1
+          ][subindex][index + 1][subindex + 1].contrast +
+          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
+            subindex - 1
+          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
+            index + 1
+          ][subindex][index + 1][subindex + 1].contrast +
+          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
+            subindex - 1
+          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
+            index + 1
+          ][subindex][index + 1][subindex + 1].contrast +
+          image_screen[index - 1][subindex - 1][index][subindex - 1][index + 1][
+            subindex - 1
+          ][index - 1][subindex][index - 1][subindex + 1][index][subindex + 1][
+            index + 1
+          ][subindex][index + 1][subindex + 1].contrast) /
+        8;
+      image_screen[index][subindex] = {
+        red: red,
+        green: green,
+        blue: blue,
+        contrast: contrast,
+      };
+    }
+  }
+  console.log({ image_screen });
 }
