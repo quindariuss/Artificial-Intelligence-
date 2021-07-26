@@ -12,6 +12,7 @@ const source_image = new Image();
 let image_data = null;
 let image_data_copy = null;
 let orginal_pixels = null;
+let orginal_pixels_copy = null;
 let current_pixels = null;
 
 red_slider.onchange = run_filter;
@@ -185,4 +186,62 @@ function change_to_object() {
     });
   }
   console.log({ object });
+  orginal_pixels_copy = object.slice();
+  return object;
+}
+
+var image_screen = new Array(source_image.width);
+function change_to_screen() {
+  for (index = 0; index < source_image.width; index++) {
+    image_screen[index] = new Array(source_image.height);
+    for (subindex = 0; subindex < source_image.height; subindex++) {
+      image_screen[index][subindex] = orginal_pixels_copy[0];
+      orginal_pixels_copy.shift();
+    }
+  }
+  console.log(image_screen[0][0].red);
+}
+
+function get_average_image() {
+  var red =
+    (image_screen[0][0].red +
+      image_screen[1][0].red +
+      image_screen[2][0].red +
+      image_screen[0][1].red +
+      image_screen[0][2].red +
+      image_screen[1][2].red +
+      image_screen[2][1].red +
+      image_screen[2][2].red) /
+    8;
+  var green =
+    (image_screen[0][0].green +
+      image_screen[1][0].green +
+      image_screen[2][0].green +
+      image_screen[0][1].green +
+      image_screen[0][2].green +
+      image_screen[1][2].green +
+      image_screen[2][1].green +
+      image_screen[2][2].green) /
+    8;
+  var blue =
+    (image_screen[0][0].blue +
+      image_screen[1][0].blue +
+      image_screen[2][0].blue +
+      image_screen[0][1].blue +
+      image_screen[0][2].blue +
+      image_screen[1][2].blue +
+      image_screen[2][1].blue +
+      image_screen[2][2].blue) /
+    8;
+  var contrast =
+    (image_screen[0][0].contrast +
+      image_screen[1][0].contrast +
+      image_screen[2][0].contrast +
+      image_screen[0][1].contrast +
+      image_screen[0][2].contrast +
+      image_screen[1][2].contrast +
+      image_screen[2][1].contrast +
+      image_screen[2][2].contrast) /
+    8;
+  console.log({ red }, { green }, { blue }, { contrast });
 }
