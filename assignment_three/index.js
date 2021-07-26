@@ -125,8 +125,8 @@ var rgb = [];
 for (index = 0; index < 10000; index += 4) {
   rgb.push({
     red: numbers[index],
-    blue: numbers[index + 1],
-    green: numbers[index + 2],
+    green: numbers[index + 1],
+    blue: numbers[index + 2],
     contrast: numbers[index + 3],
   });
 }
@@ -151,9 +151,9 @@ for (index = 0; index < 25; index++) {
   for (subindex = 0; subindex < 25; subindex++) {
     imgdata[count] = scrren[index][subindex].red;
     count++;
-    imgdata[count] = scrren[index][subindex].blue;
-    count++;
     imgdata[count] = scrren[index][subindex].green;
+    count++;
+    imgdata[count] = scrren[index][subindex].blue;
     count++;
     imgdata[count] = scrren[index][subindex].contrast;
     count++;
