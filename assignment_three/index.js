@@ -9,6 +9,7 @@ const grayscale_checkbox = document.getElementById("grayscale");
 const contrast_slider = document.getElementById("contrast");
 
 const source_image = new Image();
+var bob = null;
 let image_data = null;
 let image_data_copy = null;
 let orginal_pixels = null;
@@ -64,6 +65,11 @@ function commit() {
   );
 }
 function commit_2() {
+  for (let i = 0; i < image_data.data.length; i++) {
+    image_data.data[i] = bob[i];
+  }
+  console.log("COMMIT 2");
+  console.log({ image_data });
   contex.putImageData(
     image_data,
     0,
@@ -269,23 +275,30 @@ function get_average_image() {
 }
 
 function get_new_image_data() {
-  var image_data = new Uint8ClampedArray(
-    source_image.width * source_image.height
-  );
+  bob = new Uint8ClampedArray(image_data.data.length);
 
   var count = 0;
   for (index = 0; index < source_image.width; index++) {
     for (subindex = 0; subindex < source_image.height; subindex++) {
-      image_data[count] = image_screen[index][subindex].red;
+      bob[count] = image_screen[index][subindex].red;
       count++;
-      image_data[count] = image_screen[index][subindex].green;
+      bob[count] = image_screen[index][subindex].green;
       count++;
-      image_data[count] = image_screen[index][subindex].blue;
+      bob[count] = image_screen[index][subindex].blue;
       count++;
-      image_data[count] = image_screen[index][subindex].contrast;
+      bob[count] = image_screen[index][subindex].contrast;
       count++;
     }
   }
-  console.log({ image_data });
   commit_2();
+  return bob;
+}
+
+function timer() {
+  setInterval(function () {
+    get_average_image();
+    get_new_image_data();
+    commit_2();
+  }),
+    1;
 }
