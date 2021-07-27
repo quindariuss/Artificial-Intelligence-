@@ -274,6 +274,62 @@ function get_average_image() {
   console.log({ image_screen });
 }
 
+function get_median_image() {
+  console.log({ image_screen });
+  for (index = 1; index < source_image.width - 2; index++) {
+    for (subindex = 1; subindex < source_image.height - 2; subindex++) {
+      var red = new Array(7);
+
+      red[0] = image_screen[index - 1][subindex - 1].red;
+      red[1] = image_screen[index][subindex - 1].red;
+      red[2] = image_screen[index + 1][subindex - 1].red;
+      red[3] = image_screen[index - 1][subindex].red;
+      red[4] = image_screen[index - 1][subindex + 1].red;
+      red[5] = image_screen[index][subindex + 1].red;
+      red[6] = image_screen[index + 1][subindex].red;
+      red[7] = image_screen[index + 1][subindex + 1].red;
+      var green = new Array(7);
+
+      green[0] = image_screen[index - 1][subindex - 1].green;
+      green[1] = image_screen[index][subindex - 1].green;
+      green[2] = image_screen[index + 1][subindex - 1].green;
+      green[3] = image_screen[index - 1][subindex].green;
+      green[4] = image_screen[index - 1][subindex + 1].green;
+      green[5] = image_screen[index][subindex + 1].green;
+      green[6] = image_screen[index + 1][subindex].green;
+      green[7] = image_screen[index + 1][subindex + 1].green;
+      var blue = new Array(7);
+
+      blue[0] = image_screen[index - 1][subindex - 1].blue;
+      blue[1] = image_screen[index][subindex - 1].blue;
+      blue[2] = image_screen[index + 1][subindex - 1].blue;
+      blue[3] = image_screen[index - 1][subindex].blue;
+      blue[4] = image_screen[index - 1][subindex + 1].blue;
+      blue[5] = image_screen[index][subindex + 1].blue;
+      blue[6] = image_screen[index + 1][subindex].blue;
+      blue[7] = image_screen[index + 1][subindex + 1].blue;
+      var green = new Array(7);
+
+      contrast[0] = image_screen[index - 1][subindex - 1].contrast;
+      contrast[1] = image_screen[index][subindex - 1].contrast;
+      contrast[2] = image_screen[index + 1][subindex - 1].contrast;
+      contrast[3] = image_screen[index - 1][subindex].contrast;
+      contrast[4] = image_screen[index - 1][subindex + 1].contrast;
+      contrast[5] = image_screen[index][subindex + 1].contrast;
+      contrast[6] = image_screen[index + 1][subindex].contrast;
+      contrast[7] = image_screen[index + 1][subindex + 1].contrast;
+
+      image_screen[index][subindex] = {
+        red: red[1],
+        green: green[1],
+        blue: blue[1],
+        contrast: contrast[1],
+      };
+    }
+  }
+  console.log({ image_screen });
+}
+
 function get_new_image_data() {
   bob = new Uint8ClampedArray(image_data.data.length);
 
